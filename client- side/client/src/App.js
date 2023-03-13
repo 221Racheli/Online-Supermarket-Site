@@ -4,16 +4,20 @@ import Login from "./pages/login/Login";
 import Register from './pages/register/register';
 import ResponsiveAppBar from "./pages/Categories/CategoryList"
 import Items from "./pages/Items/index"
-
-
+// import Item from './pages/Items/Item';
+// import LargeItem from './pages/Items/LargeItem';
+import LabelBottomNavigation from "./pages/general/bottomNav"
+import CustomizedInputBase from "./pages/general/search"
 function App() {
   return (
     <>
     {/* <AppBar><Categories></Categories> </AppBar> */}
     {/* {true?<div>jhjh</div>:<div>false</div>} */}
-    {/* <div>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</div>  */}
-    <ResponsiveAppBar></ResponsiveAppBar>
-    {/* <Items id={10012}/> */}
+    {/* <ResponsiveAppBar></ResponsiveAppBar> */}
+   {/* <Item info={{"name":"jj","company":"fgfoo","price":"9"}}></Item> */}
+   {/* <LargeItem info={{"name":"jj","company":"fgfoo","price":"90"}}></LargeItem> */}
+   <Items id="10012"/>
+   <CustomizedInputBase></CustomizedInputBase>
       <Router>
         {/* <nav className='nav'>
           <NavLink to='/'>Home</NavLink>
@@ -24,10 +28,10 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path ='/register' element={<Register/>}/>
-          {/* <Route path ='/items' element={<Items/>}/> */}
           <Route path='*' element={<h1> 404 Page not found</h1>} />
         </Routes>
       </Router>
+      <LabelBottomNavigation></LabelBottomNavigation>
     </>
   );
 }
