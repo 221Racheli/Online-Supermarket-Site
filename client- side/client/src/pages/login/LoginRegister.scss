@@ -1,0 +1,129 @@
+/* Global Styles */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #e4e4e4;
+}
+
+/* Color Palette */
+
+:root {
+  --primary-color: #cee1eb;
+  --secondary-color: #f06292;
+  --accent-color: #ffee58;
+  --text-color: #333;
+}
+
+/* Login Styles */
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  width: 50vh;
+  background-color: var(--primary-color);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.login-form h1 {
+  margin-bottom: 20px;
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--text-color);
+  text-align: center;
+  text-shadow: 1px 1px var(--secondary-color);
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-color);
+  text-align: center;
+  text-shadow: 1px 1px var(--secondary-color);
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.login-form input[type="email"]:focus,
+.login-form input[type="password"]:focus {
+  outline: none;
+  box-shadow: 0 0 5px var(--accent-color);
+}
+
+.login-form button[type="submit"] {
+  background-color: var(--secondary-color);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 15px 30px;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-form button[type="submit"]:hover {
+  background-color: #d81b60;
+}
+
+/* Registration Styles */
+
+.registration-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--secondary-color);
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.registration-form h1 {
+  margin-bottom: 20px;
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--text-color);
+  text-align: center;
+  text-shadow: 1px 1px var(--primary-color);
+}
+
+.registration-form label {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 24px;
+ 
+}
