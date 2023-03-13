@@ -51,19 +51,19 @@ function ResponsiveAppBar() {
   }, []);
 
   return (
-    <AppBar position="static"  backgroundColor='black'>
-      <Container maxWidth="xl" backgroundColor='black'>
+    <AppBar position="static" >
+      <Container maxWidth="xl" >
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <Box sx={{ flexGrow: 0  ,backgroundColor:'black'}}>
+          <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0  ,backgroundColor:'black'}}>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <CustomizedInputBase></CustomizedInputBase>
             <Menu
-              sx={{ mt: '45px' ,backgroundColor:'black'}}
+              sx={{ mt: '45px'}}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -85,7 +85,7 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, backgroundColor:'black'}}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -112,7 +112,6 @@ function ResponsiveAppBar() {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: 'block', md: 'none' },
-                backgroundColor:'black'
               }}
               
             >
@@ -141,20 +140,19 @@ function ResponsiveAppBar() {
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
-              backgroundColor:'black',
             }}
           >
             LOGO_
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } ,backgroundColor:'black' }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {categories.map((category) => (
               <Button
                 key={category.category_id}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block'  ,backgroundColor:'black'}}
+                sx={{ my: 2, color: 'white', display: 'block'  }}
               >
               <BasicMenu category={category.name} subCategories={['a','b']}>{category.name}</BasicMenu>
-              {category.name}
+              {/* {category.name} */}
               </Button>
             ))}
           </Box>
@@ -171,7 +169,6 @@ function ResponsiveAppBar() {
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
-              backgroundColor:'black',
             }}
           >
             LOGO Supermarket

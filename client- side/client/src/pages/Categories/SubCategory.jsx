@@ -21,6 +21,7 @@ export default function BasicMenu({category,subCategories}) {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
+        sx={{color:'white'}}
       >
         {category}
       </Button>
@@ -32,6 +33,7 @@ export default function BasicMenu({category,subCategories}) {
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
+        sx={{color:'white'}}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>

@@ -3,7 +3,7 @@ import Home from './pages/home';
 import Login from "./pages/login/Login";
 import Register from './pages/register/register';
 import ResponsiveAppBar from "./pages/Categories/CategoryList"
-import Items from "./pages/Items/index"
+import NestedGrid from "./pages/Items/index"
 // import Item from './pages/Items/Item';
 // import LargeItem from './pages/Items/LargeItem';
 import LabelBottomNavigation from "./pages/general/bottomNav"
@@ -13,11 +13,10 @@ function App() {
     <>
     {/* <AppBar><Categories></Categories> </AppBar> */}
     {/* {true?<div>jhjh</div>:<div>false</div>} */}
-    {/* <ResponsiveAppBar></ResponsiveAppBar> */}
+    <ResponsiveAppBar></ResponsiveAppBar>
    {/* <Item info={{"name":"jj","company":"fgfoo","price":"9"}}></Item> */}
    {/* <LargeItem info={{"name":"jj","company":"fgfoo","price":"90"}}></LargeItem> */}
-   <Items id="10012"/>
-   <CustomizedInputBase></CustomizedInputBase>
+   <NestedGrid id="10012"/>
       <Router>
         {/* <nav className='nav'>
           <NavLink to='/'>Home</NavLink>
@@ -31,6 +30,7 @@ function App() {
           <Route path='*' element={<h1> 404 Page not found</h1>} />
         </Routes>
       </Router>
+      <CustomizedInputBase></CustomizedInputBase>
       <LabelBottomNavigation></LabelBottomNavigation>
     </>
   );
