@@ -24,7 +24,7 @@ function FormRow({ id }) {
     return (
         <React.Fragment>
             {items.map((item) => (
-                <Grid item xs={4}>
+                <Grid item xs={2}>
                     <Item info={item}></Item>
                 </Grid>
 
@@ -35,9 +35,9 @@ function FormRow({ id }) {
 
 export default function NestedGrid({id}) {
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1 ,margin:'3%'}}>
             <Grid container spacing={1}>
-                <Grid container item spacing={3}>
+                <Grid container item spacing={4}>
                     <FormRow id={id} />
                 </Grid>
                 {/* <Grid container item spacing={3}>

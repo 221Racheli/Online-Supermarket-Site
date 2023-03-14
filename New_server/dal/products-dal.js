@@ -26,17 +26,19 @@ getProductsById = async (order_id)=>{
 }
 //checked 👍
 getProducstBySearch=async(keyWord)=>{
-    return await Product.findAll({
+    const res= await Product.findAll({
         where:{
             [Op.or]:[{name:{[Op.like]:`%${keyWord}%`}},
             {company:{[Op.like]:`%${keyWord}%`}}]
             }
-     }),
+     })
+res.push(
         await Product.findAll({
         include:[
             {model:SubCategory, as:'subcategory', where:{name:{[Op.like]:`%${keyWord}%`}}, attributes:[]}
         ]
-})
+}))
+return res;
 }
  
 //checked 👍

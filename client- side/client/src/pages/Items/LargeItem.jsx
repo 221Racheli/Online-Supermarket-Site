@@ -17,10 +17,14 @@ const style = {
   p: 4,
 };
 
-function LargeItem({openStatus}) {
+function LargeItem({openStatus,setopenStatus}) {
   const [open, setOpen] = React.useState(openStatus);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => 
+  {
+    setOpen(false);
+    setopenStatus(false);
+  }
 
   return (
     <div>

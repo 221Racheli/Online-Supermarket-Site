@@ -6,8 +6,24 @@ import IconButton from '@mui/material/IconButton';
 // import MenuIcon from '@mui/icons-material/Menu';
 // import SearchIcon from '@mui/icons-material/Search';
 // import DirectionsIcon from '@mui/icons-material/Directions';
-
+import { useEffect, useState } from "react";
+import axios from 'axios';
+import BasicPopover from './searchedData';
 export default function CustomizedInputBase() {
+  const [dataFromSearch, setDataFromSearch] = useState("");
+  const [changed, setChanged] = useState("");
+
+  const onChange = async (event) => {
+    try {
+      const { data } = await axios.get(`http://localhost:3600/products/search?keyWord=${event.target.value}`);
+      setDataFromSearch(data);
+      setChanged(true)
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <Paper
       component="form"
@@ -19,7 +35,9 @@ export default function CustomizedInputBase() {
       <InputBase
         sx={{ ml: 1, flex: 1 }}
         placeholder="search"
-        inputProps={{ 'aria-label': 'search google maps' }}
+        //inputProps={{ 'aria-label': 'search google maps' }}
+
+        onChange={onChange}
       />
       {/* <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
         <SearchIcon />
@@ -28,6 +46,7 @@ export default function CustomizedInputBase() {
       {/* <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
         <DirectionsIcon />
       </IconButton> */}
+      {changed && <BasicPopover changed={changed} setChanged={setChanged} dataFromSearch={dataFromSearch} />}
     </Paper>
   );
 }

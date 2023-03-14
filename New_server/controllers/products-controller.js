@@ -26,7 +26,8 @@ class ProductsContoller{
         console.log(keyWord);
         const productsFromSearch = await productsDal.getProducstBySearch(keyWord);
         if (productsFromSearch.length >0)
-            res.send(productsFromSearch)
+            {console.log(productsFromSearch);
+                res.send(productsFromSearch)}
         else
             return res.status(400).json({massage:`No products were found for your search, please try again`})
     }

@@ -7,12 +7,9 @@ import NestedGrid from "./pages/Items/index"
 // import Item from './pages/Items/Item';
 // import LargeItem from './pages/Items/LargeItem';
 import LabelBottomNavigation from "./pages/general/bottomNav"
-import CustomizedInputBase from "./pages/general/search"
 function App() {
   return (
     <>
-    {/* <AppBar><Categories></Categories> </AppBar> */}
-    {/* {true?<div>jhjh</div>:<div>false</div>} */}
     <ResponsiveAppBar></ResponsiveAppBar>
    {/* <Item info={{"name":"jj","company":"fgfoo","price":"9"}}></Item> */}
    {/* <LargeItem info={{"name":"jj","company":"fgfoo","price":"90"}}></LargeItem> */}
@@ -30,7 +27,6 @@ function App() {
           <Route path='*' element={<h1> 404 Page not found</h1>} />
         </Routes>
       </Router>
-      <CustomizedInputBase></CustomizedInputBase>
       <LabelBottomNavigation></LabelBottomNavigation>
     </>
   );

@@ -7,10 +7,16 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import LargeItem from './LargeItem';
 import CardActionArea from '@mui/material/CardActionArea';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import IconButton from '@mui/material/IconButton';
 
 
 export default function Item({ info }) {
   const [open, setOpen] = React.useState(false);
+
+ 
+
+
   return (
     <>
     <Card sx={{ maxWidth: 345 }}>
@@ -34,11 +40,14 @@ export default function Item({ info }) {
       </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="large" >+</Button>
-        <Button size="large">-</Button>
+      <Button variant="outlined" size='small'>+</Button>
+      <Button variant="outlined" size='small'>-</Button>
+        <IconButton color="primary" aria-label="add to shopping cart">
+        <AddShoppingCartIcon />
+      </IconButton>
       </CardActions>
     </Card>
-    {open && <LargeItem openStatus={open} ></LargeItem>}
+    {open && <LargeItem openStatus={open} setopenStatus={setOpen} ></LargeItem>}
     </>
   );
 }
