@@ -30,11 +30,12 @@ export default function BasicPopover({changed,setChanged,dataFromSearch}) {
         anchorEl={anchorEl}
         onMouseDown={handleClose}
         anchorOrigin={{
-          vertical: 'bottom',
+          vertical: 'top',
           horizontal: 'left',
         }}
       >
-        <Typography sx={{ p: 2 }}>{dataFromSearch[0][0]}</Typography>
+        <Typography sx={{ p: 2 }}></Typography>
+        <p>{{...dataFromSearch}}</p>
       </Popover>
     </div>
   );

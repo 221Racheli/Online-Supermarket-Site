@@ -13,8 +13,10 @@ import IconButton from '@mui/material/IconButton';
 
 export default function Item({ info }) {
   const [open, setOpen] = React.useState(false);
+  let [amount,setAmount]=React.useState(0);
+ const addToCart=()=>{
 
- 
+ }
 
 
   return (
@@ -35,19 +37,20 @@ export default function Item({ info }) {
           <br />
           {info.company}
           <br />
-          {info.price}
+          {"ש'ח" +" "+ info.price}
         </Typography>
       </CardContent>
       </CardActionArea>
       <CardActions>
-      <Button variant="outlined" size='small'>+</Button>
-      <Button variant="outlined" size='small'>-</Button>
-        <IconButton color="primary" aria-label="add to shopping cart">
+      <Button variant="outlined" size='small' onClick={()=>{setAmount(amount++)}}>+</Button>
+      <spam>{amount}</spam>
+      <Button variant="outlined" size='small'onClick={()=>{setAmount(amount--)}}>-</Button>
+        <IconButton onClick={addToCart()} color="primary" aria-label="add to shopping cart">
         <AddShoppingCartIcon />
       </IconButton>
       </CardActions>
     </Card>
-    {open && <LargeItem openStatus={open} setopenStatus={setOpen} ></LargeItem>}
+    {open && <LargeItem openStatus={open} setopenStatus={setOpen} info={info}></LargeItem>}
     </>
   );
 }

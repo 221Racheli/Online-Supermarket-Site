@@ -6,7 +6,8 @@ import ResponsiveAppBar from "./pages/Categories/CategoryList"
 import NestedGrid from "./pages/Items/index"
 // import Item from './pages/Items/Item';
 // import LargeItem from './pages/Items/LargeItem';
-import LabelBottomNavigation from "./pages/general/bottomNav"
+import Footer from "./pages/general/bottomNav"
+
 function App() {
   return (
     <>
@@ -27,7 +28,7 @@ function App() {
           <Route path='*' element={<h1> 404 Page not found</h1>} />
         </Routes>
       </Router>
-      <LabelBottomNavigation></LabelBottomNavigation>
+      <Footer></Footer>
     </>
   );
 }
