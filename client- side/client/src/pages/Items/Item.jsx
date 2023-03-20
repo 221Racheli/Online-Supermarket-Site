@@ -12,8 +12,25 @@ import IconButton from '@mui/material/IconButton';
 
 
 export default function Item({ info }) {
+
   const [open, setOpen] = React.useState(false);
-  let [amount,setAmount]=React.useState(0);
+  const [amount,setAmount]=React.useState(0);
+
+  const amountSetting=(e)=>{
+    if(e=='increase'){
+      if(amount<info.amount)
+      {
+        setAmount(amount+1);
+      }
+    }
+    if(e=='decrease'){
+      if(amount>0)
+      {
+        setAmount(amount-1);
+      }
+    }
+  }
+
  const addToCart=()=>{
 
  }
@@ -23,7 +40,6 @@ export default function Item({ info }) {
     <>
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea onClick={()=>setOpen(true)}>
-      {/* <CardActionArea onClick={()=>{alert("this is onClick")}}> */}
       <CardMedia
         sx={{ height: 140 }}
         image="/Banana.JPG"
@@ -37,14 +53,14 @@ export default function Item({ info }) {
           <br />
           {info.company}
           <br />
-          {"ש'ח" +" "+ info.price}
+          {"שח" +" "+ info.price}
         </Typography>
       </CardContent>
       </CardActionArea>
       <CardActions>
-      <Button variant="outlined" size='small' onClick={()=>{setAmount(amount++)}}>+</Button>
+      <Button variant="outlined" size='small' id="increase" onClick={(e)=>{amountSetting(e.currentTarget.id)}}>+</Button>
       <spam>{amount}</spam>
-      <Button variant="outlined" size='small'onClick={()=>{setAmount(amount--)}}>-</Button>
+      <Button variant="outlined" size='small'id="decrease" onClick={(e)=>{amountSetting(e.currentTarget.id)}}>-</Button>
         <IconButton onClick={addToCart()} color="primary" aria-label="add to shopping cart">
         <AddShoppingCartIcon />
       </IconButton>

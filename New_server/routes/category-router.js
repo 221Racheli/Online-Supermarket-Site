@@ -11,6 +11,5 @@ categoryRouter.route("/:categoryId")
     .get(categoryController.getAllSubCategories)
     
 
-
 module.exports = categoryRouter;
 

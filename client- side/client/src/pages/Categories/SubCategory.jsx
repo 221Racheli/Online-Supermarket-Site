@@ -2,14 +2,22 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from "react-router-dom";
 
-export default function BasicMenu({category,subCategories}) {
+
+export default function BasicMenu({ category,categoryId,subCategories}) {
+  const navigate=useNavigate()
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [category_id, setCategory_id] = React.useState(categoryId);
   const open = Boolean(anchorEl);
+  
   const handleClick = (event) => {
+    // navigate(`/items/${category_id}`);
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (e) => {
+    setCategory_id(e.currentTarget.id)
+    navigate(`/items/${category_id}`);
     setAnchorEl(null);
   };
 
@@ -21,7 +29,7 @@ export default function BasicMenu({category,subCategories}) {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        sx={{color:'white'}}
+        sx={{ color: 'white' }}
       >
         {category}
       </Button>
@@ -33,11 +41,9 @@ export default function BasicMenu({category,subCategories}) {
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
-        sx={{color:'white'}}
+        sx={{ color: 'white' }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={(e) => { handleClose(e) }} >My account</MenuItem>
       </Menu>
     </div>
   );

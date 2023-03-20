@@ -19,15 +19,14 @@ import CustomizedInputBase from "../general/search"
 import CustomizedBadges from "../general/cart"
 
 
-
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [categories, setCategories] = useState([]);
   
-  const [categories,setCategories] = useState([]);
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -36,7 +35,7 @@ function ResponsiveAppBar() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (categoryId) => {
     setAnchorElNav(null);
   };
 
@@ -46,10 +45,10 @@ function ResponsiveAppBar() {
 
   useEffect(() => {
     async function fetchData() {
-        const {data} = await axios.get('http://localhost:3600/category');
-        setCategories(data);
-      }
-      fetchData();
+      const { data } = await axios.get('http://localhost:3600/category');
+      setCategories(data);
+    }
+    fetchData();
   }, []);
 
   return (
@@ -65,7 +64,7 @@ function ResponsiveAppBar() {
             </Tooltip>
             <CustomizedInputBase></CustomizedInputBase>
             <Menu
-              sx={{ mt: '45px'}}
+              sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -87,7 +86,7 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -115,15 +114,14 @@ function ResponsiveAppBar() {
               sx={{
                 display: { xs: 'block', md: 'none' },
               }}
-              
-            >
+
+            >       
+         
               {categories.map((category) => (
-                <>
-                <MenuItem key={category.category_id} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{category.name}</Typography> 
-                </MenuItem>
-                <BasicMenu category={category.name} subCategories={['a','b']}>{category.name}</BasicMenu>
-                </>
+                  <MenuItem key={category.category_id} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{category.name}</Typography>
+                  </MenuItem>
+                  // <BasicMenu category={category.name} subCategories={['a', 'b']}>{category.name}</BasicMenu>
               ))}
             </Menu>
           </Box>
@@ -151,9 +149,9 @@ function ResponsiveAppBar() {
               <Button
                 key={category.category_id}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block'  }}
-              >
-              <BasicMenu category={category.name} subCategories={['a','b']}>{category.name}</BasicMenu>
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              > 
+                <BasicMenu category={category.name} categoryId={category.category_id} subCategories={['a', 'b']}>{category.name}</BasicMenu>
               </Button>
             ))}
           </Box>

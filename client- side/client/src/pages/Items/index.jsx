@@ -6,16 +6,19 @@ import Grid from '@mui/material/Grid';
 import Item from './Item';
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 
 
 
-function FormRow({ id }) {
-
+function FormRow() {
     const [items, setItems] = useState([]);
+
+    const { categoryId } = useParams();
 
     useEffect(() => {
         async function fetchData() {
-            const { data } = await axios.get(`http://localhost:3600/products/${id}`);
+            // const { data } = await axios.get(`http://localhost:3600/products/${categoryId}`);
+            const { data } = await axios.get(`http://localhost:3600/products/10012`);
             setItems(data);
         }
         fetchData();
@@ -27,25 +30,18 @@ function FormRow({ id }) {
                 <Grid item xs={2}>
                     <Item info={item}></Item>
                 </Grid>
-
             ))}
         </React.Fragment>
     );
 }
 
-export default function NestedGrid({id}) {
+export default function NestedGrid() {
     return (
-        <Box sx={{ flexGrow: 1 ,margin:'3%'}}>
+        <Box sx={{ flexGrow: 1, margin: '3%' }}>
             <Grid container spacing={1}>
                 <Grid container item spacing={4}>
-                    <FormRow id={id} />
-                </Grid>
-                {/* <Grid container item spacing={3}>
                     <FormRow />
                 </Grid>
-                <Grid container item spacing={3}>
-                    <FormRow />
-                </Grid> */}
             </Grid>
         </Box>
     );

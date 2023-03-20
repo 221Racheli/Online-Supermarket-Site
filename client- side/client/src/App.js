@@ -1,34 +1,31 @@
 import { BrowserRouter as Router, Routes, Route, Link, NavLink } from 'react-router-dom'
 import Home from './pages/home';
-import Login from "./pages/login/Login";
-import Register from './pages/register/register';
+import SignIn from "./pages/login/signIn";
+import SignUp from './pages/register/signUp';
 import ResponsiveAppBar from "./pages/Categories/CategoryList"
 import NestedGrid from "./pages/Items/index"
-// import Item from './pages/Items/Item';
-// import LargeItem from './pages/Items/LargeItem';
 import Footer from "./pages/general/bottomNav"
+
 
 function App() {
   return (
     <>
-    <ResponsiveAppBar></ResponsiveAppBar>
-   {/* <Item info={{"name":"jj","company":"fgfoo","price":"9"}}></Item> */}
-   {/* <LargeItem info={{"name":"jj","company":"fgfoo","price":"90"}}></LargeItem> */}
-   <NestedGrid id="10012"/>
+
+      {/* <NestedGrid id={10012}/> */}
       <Router>
-        {/* <nav className='nav'>
-          <NavLink to='/'>Home</NavLink>
-          <NavLink to='/login'>login</NavLink>
-          <NavLink to='/register'> sign Up</NavLink>
-        </nav> */}
+        <>
+          <ResponsiveAppBar></ResponsiveAppBar>
+        </>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path ='/register' element={<Register/>}/>
+          <Route path='/SignIn' element={<SignIn />} />
+          <Route path ='/SignUp' element={<SignUp/>}/> 
+          <Route key="items" path="/items/:categoryId" element={<NestedGrid />} />
           <Route path='*' element={<h1> 404 Page not found</h1>} />
         </Routes>
       </Router>
       <Footer></Footer>
+
     </>
   );
 }
