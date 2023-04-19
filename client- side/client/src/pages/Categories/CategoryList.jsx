@@ -17,17 +17,19 @@ import axios from 'axios';
 import BasicMenu from "./SubCategory"
 import CustomizedInputBase from "../general/search"
 import CustomizedBadges from "../general/cart"
+import { useNavigate } from "react-router-dom";
 
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
+
+  const navigate = useNavigate();
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [categories, setCategories] = useState([]);
   
-
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -40,6 +42,7 @@ function ResponsiveAppBar() {
   };
 
   const handleCloseUserMenu = () => {
+    navigate('/account');
     setAnchorElUser(null);
   };
 
@@ -55,7 +58,6 @@ function ResponsiveAppBar() {
     <AppBar position="static" >
       <Container maxWidth="xl" >
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -84,9 +86,9 @@ function ResponsiveAppBar() {
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
-            </Menu>
+            </Menu> 
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: {xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -116,7 +118,6 @@ function ResponsiveAppBar() {
               }}
 
             >       
-         
               {categories.map((category) => (
                   <MenuItem key={category.category_id} onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">{category.name}</Typography>
@@ -151,7 +152,7 @@ function ResponsiveAppBar() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               > 
-                <BasicMenu category={category.name} categoryId={category.category_id} subCategories={['a', 'b']}>{category.name}</BasicMenu>
+                <BasicMenu category={category.name} categoryId={category.category_id}>{category.name}</BasicMenu>
               </Button>
             ))}
           </Box>
@@ -170,7 +171,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO Supermarket
+            LOGO Supermarket 
           </Typography>
           <CustomizedBadges></CustomizedBadges>
         </Toolbar>

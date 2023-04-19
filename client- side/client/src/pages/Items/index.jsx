@@ -12,17 +12,22 @@ import { useParams } from 'react-router-dom';
 
 function FormRow() {
     const [items, setItems] = useState([]);
-
-    const { categoryId } = useParams();
+    
+    const { subCategoryId } = useParams();
 
     useEffect(() => {
         async function fetchData() {
-            // const { data } = await axios.get(`http://localhost:3600/products/${categoryId}`);
-            const { data } = await axios.get(`http://localhost:3600/products/10012`);
-            setItems(data);
+            try{
+                const { data} = await axios.get(`http://localhost:3600/products/${subCategoryId}`);
+                setItems(data);
+            }
+            catch{
+                setItems([]); 
+            }    
         }
         fetchData();
-    }, []);
+    },[subCategoryId]);
+
 
     return (
         <React.Fragment>

@@ -8,15 +8,10 @@ class CategoryDataAccessor {
 
     //checked 👍
     getAllCategories = async () => {
-         console.log("getAllCategories ❤");
-
+        console.log("getAllCategories ❤");
         const categories = await Category.findAll({
-            // include: { model: subCategory, as: 'subcategory'}
-            include: [
-            { model: subCategory, as: 'subcategory'}]
-          });
-          
-
+            include: { model: subCategory, as: 'subcategory' }
+        });
         console.log(JSON.stringify(categories, null, 2));
         return categories;
     }
@@ -26,11 +21,8 @@ class CategoryDataAccessor {
         console.log(categoryId);
         var subCategories = await subCategory.findAll({ where: { category_id: categoryId } });
         return subCategories;
-
-
     }
 
- 
 }
 
 const categoryDataAccessor = new CategoryDataAccessor();

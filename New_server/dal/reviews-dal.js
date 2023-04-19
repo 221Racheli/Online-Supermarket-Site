@@ -9,6 +9,7 @@ addReview=async(customer_id,content)=>{
     return await Review.create({
         customer_id:customer_id,
         content:content,
+        status:"handling"
     });
 }
 

@@ -33,19 +33,11 @@ function LargeItem({openStatus,setopenStatus,info}) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        
       >
         <Box sx={style} image="/Banana.JPG">
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-           
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          {info.name}
-          <br />
-          {info.company}
-          <br />
-          {" שח" +" "+info.price}
-          </Typography>
+          <Typography id="modal-modal-description" align="center" sx={{ mt: 2 }}>{info.name}</Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>{info.company}</Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>{" שח" +" "+info.price}</Typography>
         </Box>
       </Modal>
     </div>

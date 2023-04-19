@@ -3,16 +3,16 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-export default function BasicPopover({changed,setChanged,dataFromSearch}) {
-  const [anchorEl, setAnchorEl] = React.useState(true);
-  const [sChanged, setSChanged] = React.useState(changed);
-//   const handleClick = (event) => {
-//     setAnchorEl(event.currentTarget);
-//   };
+
+export default function BasicPopover({dataFromSearch,AnchorEl}) {
+  const [anchorEl, setAnchorEl] = React.useState(AnchorEl);
+  //const [clicked, setClicked] = React.useState(false);
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const handleClose = () => {
     setAnchorEl(null);
-    setChanged(false);
   };
 
   const open = Boolean(anchorEl);
@@ -23,20 +23,57 @@ export default function BasicPopover({changed,setChanged,dataFromSearch}) {
       {/* <Button aria-describedby={id} variant="contained" onClick={handleClick}>
         Open Popover
       </Button> */}
-      
+
       <Popover
         id={id}
         open={open}
         anchorEl={anchorEl}
-        onMouseDown={handleClose}
+        onClose={handleClose}
         anchorOrigin={{
-          vertical: 'top',
+          vertical: 'bottom',
           horizontal: 'left',
         }}
       >
-        <Typography sx={{ p: 2 }}></Typography>
-        <p>{{...dataFromSearch}}</p>
+        <Typography sx={{ p: 10 }}>{dataFromSearch.name}</Typography>
       </Popover>
     </div>
   );
 }
+
+// export default function BasicPopover({changed,setChanged,dataFromSearch}) {
+//   const [anchorEl, setAnchorEl] = React.useState(true);
+//   const [sChanged, setSChanged] = React.useState(changed);
+// //   const handleClick = (event) => {
+// //     setAnchorEl(event.currentTarget);
+// //   };
+
+//   const handleClose = () => {
+//     setAnchorEl(null);
+//     setChanged(false);
+//   };
+
+//   const open = Boolean(anchorEl);
+//   const id = open ? 'simple-popover' : undefined;
+
+//   return (
+//     <div>
+//       {/* <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+//         Open Popover
+//       </Button> */}
+      
+//       <Popover
+//         id={id}
+//         open={open}
+//         anchorEl={anchorEl}
+//         onMouseDown={handleClose}
+//         anchorOrigin={{
+//           vertical: 'top',
+//           horizontal: 'left',
+//         }}
+//       >
+//         <Typography sx={{ p: 2 }}></Typography>
+//         <p>{{...dataFromSearch}}</p>
+//       </Popover>
+//     </div>
+//   );
+// }

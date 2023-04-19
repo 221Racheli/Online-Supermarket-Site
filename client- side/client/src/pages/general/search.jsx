@@ -12,12 +12,13 @@ import BasicPopover from './searchedData';
 export default function CustomizedInputBase() {
   const [dataFromSearch, setDataFromSearch] = useState("");
   const [changed, setChanged] = useState("");
-
+  const [anchorEl, setAnchorEl] = React.useState("Paper");
   const onChange = async (event) => {
     try {
       const { data } = await axios.get(`http://localhost:3600/products/search?keyWord=${event.target.value}`);
       setDataFromSearch(data);
       setChanged(true)
+      setAnchorEl(event.currentTarget)
     }
     catch (err) {
       console.log(err);
@@ -46,7 +47,7 @@ export default function CustomizedInputBase() {
       {/* <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
         <DirectionsIcon />
       </IconButton> */}
-      {changed && <BasicPopover changed={changed} setChanged={setChanged} dataFromSearch={dataFromSearch} />}
+      {changed && <BasicPopover changed={changed} setChanged={setChanged} dataFromSearch={dataFromSearch} AnchorEl={anchorEl}/>}
     </Paper>
   );
 }

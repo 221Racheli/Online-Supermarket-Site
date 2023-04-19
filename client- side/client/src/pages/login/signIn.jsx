@@ -14,6 +14,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { NavLink } from 'react-router-dom'
+import { useNavigate } from "react-router-dom"
+// import { AuthContext } from './context/AuthContext';
 
 
 function Copyright(props) {
@@ -32,16 +34,16 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+   const navigate = useNavigate()
     const handleSubmit = async(event) => {
-        event.preventDefault();
+      event.preventDefault();
         const data = new FormData(event.currentTarget);
-
         const user_name= data.get('user_name');
         const password= data.get('password');
         try {
             const res = await axios.post('http://localhost:3600/users/login', { user_name, password });
             localStorage.setItem("token", JSON.stringify(res.data.accessToken));
-            //navigate("/home")
+            navigate(-1);
         }
         catch (err) {
             //setErr(err.response.data?.message);
@@ -49,7 +51,6 @@ export default function SignIn() {
   };
   const handleLogin = async (e) => {
     // e.preventDefault();
-    
   };
   return (
     <ThemeProvider theme={theme}>
@@ -105,9 +106,6 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <NavLink href="#" variant="body2">
-                  Forgot password?
-                </NavLink>
               </Grid>
               <Grid item>
                 <NavLink to='/signUp' variant="body2">

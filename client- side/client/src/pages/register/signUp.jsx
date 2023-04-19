@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { NavLink } from 'react-router-dom'
+import { NavLink,useNavigate } from 'react-router-dom'
 import axios from 'axios';
 function Copyright(props) {
   return (
@@ -30,11 +30,14 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default async function SignUp() {
-  const handleSubmit = (event) => {
+export default function SignUp() {
+  const navigate=useNavigate();
+  const handleSubmit =async (event) => {
+ 
     event.preventDefault();
+    
     const data = new FormData(event.currentTarget);
-  
+    console.log(data);
     const firstName= data.get('firstName');
     const lastName= data.get('lastName');
     const phoneNumber1= data.get('phoneNumber1');
@@ -45,21 +48,22 @@ export default async function SignUp() {
     const password= data.get('password');
     
     //address={'address':Address};
-    const response = axios.post('http://localhost:3600/users/register', {first_name:firstName,last_name:lastName,user_name:userName, password,phone_number1:phoneNumber1,phone_number2:phoneNumber2,address:Address,email });
-    const responseData = response.json();
+    const response = await axios.post('http://localhost:3600/users/register', {first_name:firstName,last_name:lastName,user_name:userName, password,phone_number1:phoneNumber1,phone_number2:phoneNumber2,address:Address,email });
+    
+    const responseData =response.json;
    if(!response.ok)
     {
      // console.log(responseData.message);
       //setRegisterInfo=responseData.message;
     }
     else
-      console.log(responseData.accessToken);
-    
-
-   
+      console.log(responseData.accessToken); 
+      localStorage.setItem("token", JSON.stringify(response.data.accessToken));
+      navigate("../home/index.js")
   };
 
   return (
+
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />

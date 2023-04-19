@@ -3,21 +3,31 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from 'axios';
 
 
-export default function BasicMenu({ category,categoryId,subCategories}) {
-  const navigate=useNavigate()
+export default function BasicMenu({ category, categoryId }) {
+  const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [category_id, setCategory_id] = React.useState(categoryId);
+  const [subCategories, setSubCategories] = React.useState([]);
+
+ useEffect (() => {
+    async function fetchData() {
+      const { data } = await axios.get(`http://localhost:3600/category/${categoryId}`);
+      setSubCategories(data);
+    }
+    fetchData();
+  },[]);
+
+
   const open = Boolean(anchorEl);
-  
+
   const handleClick = (event) => {
-    // navigate(`/items/${category_id}`);
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (e) => {
-    setCategory_id(e.currentTarget.id)
-    navigate(`/items/${category_id}`);
+    navigate(`/items/${e.currentTarget.id}`);
     setAnchorEl(null);
   };
 
@@ -43,7 +53,7 @@ export default function BasicMenu({ category,categoryId,subCategories}) {
         }}
         sx={{ color: 'white' }}
       >
-        <MenuItem onClick={(e) => { handleClose(e) }} >My account</MenuItem>
+        {subCategories.map(x => <MenuItem id={x.subcategory_id} onClick={(e) => { handleClose(e) }} >{x.name} {x.subcategory_id}</MenuItem>)}
       </Menu>
     </div>
   );
