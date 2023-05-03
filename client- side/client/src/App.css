@@ -1,19 +1,34 @@
-body {
-    margin: 0;
-    padding: 0;
-    height:1000px;
+/* 
+    .small .product-image{
+        max-width:150px;
+        background-size: contain;
+        margin-left: 10%;
+        margin-right: 10%;
+        align-self: center;
     }
-    .App{
-    color: #228b22;
-    text-align: center;
+    .large .product-image{
+        width:450px;
+        background-size: contain;
+        margin-left: 10%;
+        margin-right: 10%;
+        align-self: center;
+    } */
+
+
+    
+    /* .small{
+        max-width:150px;
+        background-size: contain;
+        margin-left: 10%;
+        margin-right: 10%;
+        align-self: center;
     }
-    .footer {
-    background-color: green;
-    border-top:2px solid red;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    color: white;
-    font-size: 25px;
-    }
+    .large {
+        width:850px;
+        background-size: contain;
+        margin-left: 10%;
+        margin-right: 10%;
+        align-self: center;
+    } */
+    
     

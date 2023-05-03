@@ -19,12 +19,20 @@ import { useNavigate } from "react-router-dom";
 
 export const CartContext = createContext();
 
+function total(products) {
+    let sum=0;
+    products.forEach(product => {
+        sum+=product.price*product.quantity
+     });
+     return sum;
+}
+
 export default function AlertDialog({ children }) {
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [amount, setAmount] = React.useState(parseInt(localStorage.getItem('amount')) || 0);
     const [products, setProducts] = React.useState(JSON.parse(localStorage.getItem('cart')) || []);
-    const[totalSum,setTotalSum]=React.useState(0);
+    const [totalSum, setTotalSum] = React.useState(total(products));
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -34,7 +42,7 @@ export default function AlertDialog({ children }) {
         setOpen(false);
     };
 
-    const openCartInfo=()=>{
+    const openCartInfo = () => {
         navigate('/cart');
         handleClose();
     }
@@ -78,7 +86,7 @@ export default function AlertDialog({ children }) {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <CartContext.Provider value={{ handleClickOpen, handleClose, amount, setAmount, products, setProducts,totalSum,setTotalSum }}>
+            <CartContext.Provider value={{ handleClickOpen, handleClose, amount, setAmount, products, setProducts, totalSum, setTotalSum,total }}>
                 {children}
             </CartContext.Provider>
         </div>

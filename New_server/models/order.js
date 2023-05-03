@@ -14,20 +14,20 @@ const Order = sequelize.define(
       allowNull: false,
     },
     status: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     totalPrice: {
-        type: DataTypes.FLOAT,
-        allowNull: false,
-      },  
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
     orderAddress: {
-        type: DataTypes.JSON,
-      },
-    
-  },  
+      type: DataTypes.JSON,
+      allowNull: true,
+    },
+
+  },
 );
 
-module.exports=Order;
+module.exports = Order;
 
-  

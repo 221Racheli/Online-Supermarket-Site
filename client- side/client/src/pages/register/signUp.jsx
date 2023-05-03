@@ -13,8 +13,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { NavLink,useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
+import { useContext } from "react";
+
+
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -31,35 +36,36 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const navigate=useNavigate();
-  const handleSubmit =async (event) => {
- 
+  const navigate = useNavigate();
+
+  const { setLogedIn } = useContext(AuthContext);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    
     const data = new FormData(event.currentTarget);
     console.log(data);
-    const firstName= data.get('firstName');
-    const lastName= data.get('lastName');
-    const phoneNumber1= data.get('phoneNumber1');
-    const phoneNumber2= data.get('phoneNumber2');
-    const Address= data.get('Address');
-    const email= data.get('email');
-    const userName= data.get('userName');
-    const password= data.get('password');
+    const firstName = data.get('firstName');
+    const lastName = data.get('lastName');
+    const phoneNumber1 = data.get('phoneNumber1');
+    const phoneNumber2 = data.get('phoneNumber2');
+    const Address = data.get('Address');
+    const email = data.get('email');
+    const userName = data.get('userName');
+    const password = data.get('password');
     
-    //address={'address':Address};
-    const response = await axios.post('http://localhost:3600/users/register', {first_name:firstName,last_name:lastName,user_name:userName, password,phone_number1:phoneNumber1,phone_number2:phoneNumber2,address:Address,email });
-    
-    const responseData =response.json;
-   if(!response.ok)
-    {
-     // console.log(responseData.message);
+    const response = await axios.post('http://localhost:3600/users/register', 
+    { first_name: firstName, last_name: lastName, user_name: userName, password, phone_number1: phoneNumber1, phone_number2: phoneNumber2, address: Address, email });
+
+    const responseData = response.json;
+    if (!response.ok) {
+      // console.log(responseData.message);
       //setRegisterInfo=responseData.message;
     }
     else
-      console.log(responseData.accessToken); 
-      localStorage.setItem("token", JSON.stringify(response.data.accessToken));
-      navigate("../home/index.js")
+      console.log(responseData.accessToken);
+    localStorage.setItem("token", JSON.stringify(response.data.accessToken));
+    setLogedIn(true);
+    navigate(-2);
   };
 
   return (
@@ -104,7 +110,7 @@ export default function SignUp() {
                   autoComplete="family-name"
                 />
               </Grid>
-              
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
@@ -133,10 +139,10 @@ export default function SignUp() {
                   id="Address"
                   label="Address"
                   name="Address"
-                 // autoComplete="email"
+                // autoComplete="email"
                 />
               </Grid>
-            
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -145,7 +151,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                 // autoComplete="email"
+                // autoComplete="email"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>

@@ -15,9 +15,50 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import RemoveSharpIcon from '@mui/icons-material/RemoveSharp';
 import AddSharpIcon from '@mui/icons-material/AddSharp';
+import { Container } from '@mui/material';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
+import { useState } from 'react';
 
+function TransitionAlerts() {
+    const [open, setOpen] = React.useState(true);
 
-const TAX_RATE = 0.17;
+    return (
+        <Box sx={{ width: '100%' }}>
+            <Collapse in={open}>
+                <Alert
+                    action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                setOpen(false);
+                            }}
+                        >
+                            <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }
+                    sx={{ mb: 2 }}
+                >
+                    Close me!
+                </Alert>
+            </Collapse>
+            <Button
+                disabled={open}
+                variant="outlined"
+                onClick={() => {
+                    setOpen(true);
+                }}
+            >
+                Re-open
+            </Button>
+        </Box>
+    );
+}
 
 function ccyFormat(num) {
     return `${num.toFixed(2)}`;
@@ -32,7 +73,7 @@ function createRow(desc, qty, unit, id) {
     return { desc, qty, unit, price, id };
 }
 
-function total(items) {
+function totalRows(items) {
     return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
 }
 let itemsToDelete = [];
@@ -47,9 +88,36 @@ function handleChange(e) {
 
 
 export default function SpanningTable() {
-    const { amount, setAmount, products, setProducts, totalSum, setTotalSum } = useContext(CartContext);
+    const { amount, setAmount, products, setProducts, totalSum, setTotalSum ,total} = useContext(CartContext);
     const rows = products.map(prod => createRow(prod.name, prod.quantity, prod.price, prod.product_id));
+    const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
+    async function handleOrder() {
+        products.forEach(async(product)=>{
+            console.log(product);
 
+
+        const res= await axios.put('http://localhost:3600/products', {productToDelete:product },
+        {
+            headers: {
+                'authorization': `Bearer ${localStorage.getItem('token')}`,
+                'content-type': 'application/json'
+            }
+        });
+    
+        });
+        const res = await axios.post('http://localhost:3600/orders', { totalPrice: totalSum, orderedProducts: products },
+            {
+                headers: {
+                    'authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'content-type': 'application/json'
+                }
+            })
+    
+        setOpen(true);
+        navigate("/");
+
+    }
     function handleClick() {
         if (itemsToDelete.length > 0) {
             let tempProducts = [];
@@ -66,12 +134,14 @@ export default function SpanningTable() {
                 }
             }
             setProducts(tempProducts);
+            tempProducts.forEach((x) => { delete x.amount; delete x.sale });
             localStorage.setItem("cart", JSON.stringify(tempProducts));
             let newAmount = 0;
             tempProducts.forEach(prod => newAmount += prod.quantity);
             setAmount(newAmount);
             console.log(newAmount);
             localStorage.setItem("amount", newAmount);
+
             itemsToDelete = [];
         }
     }
@@ -79,12 +149,13 @@ export default function SpanningTable() {
     const amountSetting = (e) => {
         const ind = products.findIndex(prod => prod.product_id == e.id);
         if (e.name == 'increase') {
-            if (products[ind].quantity + 1 < products[ind].amount) {
+            if (products[ind].quantity + 1 <= products[ind].amount) {
                 products[ind].quantity += 1;
                 localStorage.setItem("cart", JSON.stringify(products));
                 localStorage.setItem("amount", amount + 1);
                 setAmount(amount + 1);
                 setProducts([...products]);
+                setTotalSum(total(products));
             }
         }
         if (e.name == 'decrease') {
@@ -94,51 +165,58 @@ export default function SpanningTable() {
                 localStorage.setItem("amount", amount - 1);
                 setAmount(amount - 1);
                 setProducts([...products]);
+                setTotalSum(total(products));
             }
         }
     }
 
 
     return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="spanning table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell align="right" >סכום</TableCell>
-                        <TableCell align="right" colSpan={3}>
-                            פרטים
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell align="right">סה"כ</TableCell>
-                        <TableCell align="right">מחיר</TableCell>
-                        <TableCell align="right">תיאור</TableCell>
-                        <TableCell align="right">כמות</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <TableRow key={row.desc}>
-                            <TableCell align="right">{ccyFormat(row.price)}</TableCell>
-                            <TableCell align="right">{row.unit}</TableCell>
-                            <TableCell align="right">{row.desc}</TableCell>
-                            <TableCell width="10"><IconButton aria-label="expand row" size="small" name="decrease" id={row.id} onClick={(e) => { amountSetting(e.currentTarget) }} sx={{ color: 'black' }}><RemoveSharpIcon /></IconButton></TableCell>
-                            <TableCell width="10"><IconButton aria-label="expand row" size="small" name="increase" id={row.id} onClick={(e) => { amountSetting(e.currentTarget) }} sx={{ color: 'black' }}><AddSharpIcon /></IconButton></TableCell>
-                            <TableCell align="right">{row.qty}</TableCell>
-                            <TableCell padding="checkbox"><Box><Checkbox id={row.id} onChange={(e) => { handleChange(e) }} /></Box></TableCell>
+        <Container sx={{ marginTop: "7%" }}>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="right" >סכום</TableCell>
+                            <TableCell align="right" colSpan={3}>
+                                פרטים
+                            </TableCell>
                         </TableRow>
-                    ))}
-                    <TableRow>
-                        <TableCell >{ccyFormat(total(rows))}</TableCell>
-                        <TableCell align="right" colSpan={2}>בסך הכל</TableCell>
-                        <TableCell>
-                            <IconButton aria-label="delete" onClick={(e) => { handleClick(e) }}>
-                                <DeleteIcon />
-                            </IconButton>
-                        </TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
-        </TableContainer>
+                        <TableRow>
+                            <TableCell align="right">סה"כ</TableCell>
+                            <TableCell align="right">מחיר</TableCell>
+                            <TableCell align="right">תיאור</TableCell>
+                            <TableCell align="right">כמות</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.map((row) => (
+                            <TableRow key={row.desc}>
+                                <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+                                <TableCell align="right">{row.unit}</TableCell>
+                                <TableCell align="right">{row.desc}</TableCell>
+                                <TableCell width="10"><IconButton aria-label="expand row" size="small" name="decrease" id={row.id} onClick={(e) => { amountSetting(e.currentTarget) }} sx={{ color: 'black' }}><RemoveSharpIcon /></IconButton></TableCell>
+                                <TableCell width="10"><IconButton aria-label="expand row" size="small" name="increase" id={row.id} onClick={(e) => { amountSetting(e.currentTarget) }} sx={{ color: 'black' }}><AddSharpIcon /></IconButton></TableCell>
+                                <TableCell align="right">{row.qty}</TableCell>
+                                <TableCell padding="checkbox"><Box><Checkbox id={row.id} onChange={(e) => { handleChange(e) }} /></Box></TableCell>
+                            </TableRow>
+                        ))}
+                        <TableRow>
+                            <TableCell >{ccyFormat(totalRows(rows))}</TableCell>
+                            <TableCell align="right" colSpan={2}>בסך הכל</TableCell>
+                            <TableCell>
+                                <IconButton aria-label="delete" onClick={(e) => { handleClick(e) }}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+
+            </TableContainer>
+
+            <Button variant="contained" onClick={handleOrder}>לביצוע הזמנה</Button>
+            {open && <TransitionAlerts />}
+        </Container>
     );
 }

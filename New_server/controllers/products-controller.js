@@ -1,4 +1,5 @@
 const productsDal=require("../dal/products-dal");
+const { product } = require("../models");
 
 
 class ProductsContoller{
@@ -36,10 +37,26 @@ class ProductsContoller{
         var productsOnSale=await productsDal.getSaleProducts();
         if (productsOnSale.length>0)
             res.send(productsOnSale);
-        else
+        else 
             return res.status(400).json({message:`Sorry we have no products on sale`});
-
+ 
     }
+
+    updateProduct=async(req,res)=>{
+        const {productToDelete}=req.body; 
+        console.log(productToDelete);
+        const result=await productsDal.findAvailableAmountOfProducts(productToDelete.product_id);
+        const availableAmount=result.dataValues.amount;
+        if (availableAmount < productToDelete.quantity)
+            productToDelete.quantity= availableAmount;
+        productToDelete.quantity = availableAmount - productToDelete.quantity
+        console.log(productToDelete.quantity)
+        var deletedProduct=await productsDal.deleteProduct(productToDelete);
+        console.log(deletedProduct)
+        res.send(deletedProduct)
+
+
+    } 
 
 
 }

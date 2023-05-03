@@ -8,14 +8,25 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from "axios";
 import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
 
-
-export default function FormDialog({openSetting}) {
+function BasicAlerts({success}) {
+  
+  return (
+    <Stack sx={{ width: '100%' }} spacing={2}>
+      {!success&& <Alert severity="error">פנייתך לא התקבלה אנא נסה שנית</Alert>}
+      
+     { success&&<Alert severity="success">פנייתך התקבלה בהצלחה ותטופל בהקדם</Alert>}
+    </Stack>
+  );
+}
+    
+export default function FormDialog() {
   const navigate = useNavigate();
-
+  const [success,setSuccess]=useState(false);
+  const [alert,setAlert]=useState("")
   const handleSubmit =async (event) => {
     handleClose();
     event.preventDefault(); 
@@ -26,22 +37,16 @@ export default function FormDialog({openSetting}) {
         'content-type': 'application/json'
       }
     })
-    const responseData =await res.json;
+    if(res.statusText=='Created')
+      setSuccess(true);
     
-    if(!res.Created)
-     {
-       console.log()
-        //setRegisterInfo=responseData.message;
-     }
     else
-      {console.log(responseData); 
-      alert("פנייתך נשלחה בהצלחה")}
-      //navigate("../home/index.js")
- 
-  
- }
+      {setSuccess(false);}
+    setAlert(true);
+  console.log(alert)
+}
     
-  const [open, setOpen] = React.useState(openSetting);
+  const [open, setOpen] = React.useState(true);
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [content, setContent] = React.useState("");
@@ -52,7 +57,7 @@ export default function FormDialog({openSetting}) {
 
   const handleClose = () => {
     navigate(-1);
-    setOpen(false);
+    setOpen(false); 
   };
 
   const handleChange = event => {
@@ -67,10 +72,12 @@ export default function FormDialog({openSetting}) {
   };
 
   return (
+
     <div>
       {/* <Button variant="outlined" onClick={handleClickOpen}>
         Open form dialog
       </Button> */}
+      {alert&&<BasicAlerts success={success}/>}
       <Dialog open={open} >
         <DialogTitle>צור קשר</DialogTitle>
         <DialogContent>
@@ -113,7 +120,10 @@ export default function FormDialog({openSetting}) {
           <Button onClick={handleSubmit}>Submit</Button>
         </DialogActions>
       </Dialog>
+    
+    
     </div>
+   
   );
     }
 

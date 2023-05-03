@@ -12,39 +12,59 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 import axios from 'axios';
 import BasicMenu from "./SubCategory"
-import CustomizedInputBase from "../general/search"
+import SearchAppBar from "../general/search"
 import CustomizedBadges from "../general/cart"
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../../context/AuthContext';
+import { useContext } from "react";
 
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['החשבון שלי', 'יציאה'];
 
 function ResponsiveAppBar() {
 
   const navigate = useNavigate();
+  const { setLogedIn, logedIn } = useContext(AuthContext);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [categories, setCategories] = useState([]);
-  
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = (categoryId) => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    navigate('/account');
+  const handleNavigate = (id) => {
+    switch (id) {
+      case 'החשבון שלי':
+        navigate('/account');
+        break;
+      case 'יציאה':
+        navigate('/logout');
+        break;
+      case 'כניסה':
+        navigate('/signin');
+        break;
+      case 'הרשמה':
+        navigate('/signup');
+        break;
+    }
     setAnchorElUser(null);
   };
+
+  const logOut = () => {
+    setLogedIn(false);
+    localStorage.setItem('token', null);
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -55,40 +75,36 @@ function ResponsiveAppBar() {
   }, []);
 
   return (
-    <AppBar position="static" >
+    <AppBar position="sticky"  >
       <Container maxWidth="xl" >
         <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <CustomizedInputBase></CustomizedInputBase>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu> 
-          </Box>
-          <Box sx={{ flexGrow: 1, display: {xs: 'flex', md: 'none' } }}>
+          {logedIn == true ?
+            <Box sx={{ flexGrow: 0 }}>
+
+              <Tooltip title="החשבון שלי">
+                <IconButton id="החשבון שלי" onClick={(e) => handleNavigate(e.currentTarget.id)} sx={{ p: 0 }}>
+                  <AccountCircleIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="יציאה">
+                <IconButton id="יציאה" onClick={(e) => handleNavigate(e.currentTarget.id)} sx={{ p: 0 }}>
+                  <LogoutIcon />
+                </IconButton>
+              </Tooltip>
+            </Box> :
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="כניסה">
+                <IconButton id="כניסה" onClick={(e) => handleNavigate(e.currentTarget.id)} sx={{ p: 0 }}>
+                  <LoginIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="הרשמה">
+                <IconButton id="הרשמה" onClick={(e) => handleNavigate(e.currentTarget.id)} sx={{ p: 0 }}>
+                  <LoginIcon />
+                </IconButton>
+              </Tooltip></Box>}
+          <SearchAppBar></SearchAppBar>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} >
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -116,18 +132,16 @@ function ResponsiveAppBar() {
               sx={{
                 display: { xs: 'block', md: 'none' },
               }}
-
-            >       
+            >
               {categories.map((category) => (
-                  <MenuItem key={category.category_id} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{category.name}</Typography>
-                  </MenuItem>
-                  // <BasicMenu category={category.name} subCategories={['a', 'b']}>{category.name}</BasicMenu>
+                <MenuItem key={category.category_id}>
+                  <Typography textAlign="center">{category.name}</Typography>
+                  <BasicMenu category={category.name} categoryId={category.category_id} > {category.name}</BasicMenu>
+                </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
+          {/* <Typography
             variant="h5"
             noWrap
             component="a"
@@ -144,19 +158,13 @@ function ResponsiveAppBar() {
             }}
           >
             LOGO_
-          </Typography>
+          </Typography> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {categories.map((category) => (
-              <Button
-                key={category.category_id}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              > 
-                <BasicMenu category={category.name} categoryId={category.category_id}>{category.name}</BasicMenu>
-              </Button>
+              <BasicMenu category={category.name} categoryId={category.category_id}>{category.name}</BasicMenu>
             ))}
           </Box>
-          <Typography
+          {/* <Typography
             variant="h6"
             noWrap
             component="a"
@@ -171,12 +179,12 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO Supermarket 
-          </Typography>
+            LOGO Supermarket
+          </Typography> */}
           <CustomizedBadges></CustomizedBadges>
         </Toolbar>
       </Container>
-    </AppBar>
+    </AppBar >
   );
 }
 export default ResponsiveAppBar;

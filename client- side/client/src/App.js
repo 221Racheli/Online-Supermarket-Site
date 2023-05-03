@@ -1,3 +1,4 @@
+import "./App.css"
 import { BrowserRouter as Router, Routes, Route, Link, NavLink } from 'react-router-dom'
 import Home from './pages/home';
 import SignIn from "./pages/login/signIn";
@@ -9,6 +10,9 @@ import SpanningTable from "./pages/cart/cartInfo"
 import FormDialog from "./pages/reviews/sendReview"
 import CenteredTabs from "./pages/personalDashBoard/tabs"
 import BottomAppBar from './pages/general/bottomNav';
+import AlertDialogLogedIn from './pages/general/logedInMessage'
+import BarGraph from './pages/personalDashBoard/graphs'
+import AlertDialogLogOut from './pages/general/logout'
 import { AuthContextProvider } from './context/AuthContext';
 
 
@@ -23,10 +27,15 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/SignIn' element={<SignIn />} />
             <Route path='/SignUp' element={<SignUp />} />
+            {/*  */}
             <Route path='/items/:subCategoryId' element={<NestedGrid />} />
             <Route path='/cart' element={<SpanningTable />} />
-            <Route path='/review' element={<FormDialog openSetting={true} />} />
+            <Route path='/review' element={<FormDialog/>} />
+            <Route path ='/signInUp' element={<AlertDialogLogedIn/>}/>
             <Route path='/account' element={<CenteredTabs />} />
+            <Route path='/graph' element={<BarGraph/>}/>
+            <Route path='/logOut'element={<AlertDialogLogOut setting={true}/>} />
+            {/* <Route path='/search/:searchParamter'element={()=>{}} /> */}
             <Route path='*' element={<h1> 404 Page not found</h1>} />
           </Routes>
         </AlertDialog>

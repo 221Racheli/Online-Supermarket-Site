@@ -15,7 +15,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { NavLink } from 'react-router-dom'
 import { useNavigate } from "react-router-dom"
-// import { AuthContext } from './context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
+import { useContext } from "react";
 
 
 function Copyright(props) {
@@ -34,7 +35,8 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-   const navigate = useNavigate()
+   const navigate = useNavigate();
+   const { setLogedIn } = useContext(AuthContext);
     const handleSubmit = async(event) => {
       event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -43,7 +45,8 @@ export default function SignIn() {
         try {
             const res = await axios.post('http://localhost:3600/users/login', { user_name, password });
             localStorage.setItem("token", JSON.stringify(res.data.accessToken));
-            navigate(-1);
+            setLogedIn(true);
+            navigate(-2);
         }
         catch (err) {
             //setErr(err.response.data?.message);

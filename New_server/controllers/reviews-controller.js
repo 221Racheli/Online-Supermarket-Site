@@ -5,6 +5,7 @@ class ReviewsContoller{
 
 
     addReview=async(req,res)=>{
+        console.log(req.user);
         const {content,status,dateOfCare}=req.body;
         const{customer_id:customer_id}=req.user;
         if (!customer_id || !content)

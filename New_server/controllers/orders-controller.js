@@ -26,7 +26,7 @@ class OrdersContoller{
 
     getPreviousSumOfOrders=async(req,res)=>{
         const {customer_id:customer_id} = req.user;
-        const {startDate,endDate}=req.body;
+        const {startDate,endDate}=req.query;
         var sumOfPrevOrders=await ordersDal.getPreviousSumOfOrders(customer_id,startDate,endDate);
         if(sumOfPrevOrders.length > 0 )
             res.send(sumOfPrevOrders);
@@ -36,11 +36,13 @@ class OrdersContoller{
     
     AddOrder=async(req,res)=>{
         const {customer_id:customer_id} = req.user;
-        const{status,totalPrice,orderAddress}=req.body;
-        const{orderdProducts}=req.body;
-        if (!customer_id || !status || !totalPrice || orderdProducts.length ==0) 
+        const{totalPrice,orderedProducts}=req.body;
+        
+        console.log(`!!!!!!!!!!!!!!!!!!!!!!!!!!!!${orderedProducts[0].name}`);
+        // const{orderAddress}=req.body;
+        if (!customer_id  || !totalPrice || orderedProducts.length ==0) 
             return res.status(400).json({ message: 'All fields are required' })
-        var addedOrder=await ordersDal.AddOrder(customer_id,order_id,date,status,totalPrice,orderAddress,orderdProducts);
+        var addedOrder=await ordersDal.AddOrder(customer_id,totalPrice,orderedProducts);
         if (addedOrder) 
         { 
             mail.sentMail(`this is your order! \n ${JSON.stringify(addedOrder)}`,'Sending Email using Node.js server - Your Order','36325593952@mby.co.il');

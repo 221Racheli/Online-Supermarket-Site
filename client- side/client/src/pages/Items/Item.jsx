@@ -13,7 +13,7 @@ import { CartContext } from '../cart/cart';
 import { useContext } from "react"
 
 
-export default function Item({ info }) {
+export default function Item({ info}) {
 
   const [open, setOpen] = React.useState(false);
   const [amountItem, setAmountItem] = React.useState(0);
@@ -52,12 +52,13 @@ export default function Item({ info }) {
 
   return (
     <>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345,alignItems:'center' }}>
         <CardActionArea onClick={() => setOpen(true)}>
           <CardMedia
-            sx={{ height: 140 }}
-            image="/Banana.JPG"
-            title="Banana"
+            className='product-image'
+            sx={{ height: 180 ,alignItems:'center'}}
+            image={`/images/${info.subcategory_id}/${info.picture}`}
+            title={info.name}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
@@ -67,13 +68,13 @@ export default function Item({ info }) {
               <br />
               {info.company}
               <br />
-              {"שח" + " " + info.price}
+              &#8362; {info.price}
             </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
           <Button variant="outlined" size='small' id="increase" onClick={(e) => { amountSetting(e.currentTarget.id) }}>+</Button>
-          <spam>{amountItem}</spam>
+          <Typography>{amountItem}</Typography>
           <Button variant="outlined" size='small' id="decrease" onClick={(e) => { amountSetting(e.currentTarget.id) }}>-</Button>
           <IconButton onClick={addToCart} color="primary" aria-label="add to shopping cart">
             <AddShoppingCartIcon />

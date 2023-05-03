@@ -18,7 +18,7 @@ function FormRow() {
     useEffect(() => {
         async function fetchData() {
             try{
-                const { data} = await axios.get(`http://localhost:3600/products/${subCategoryId}`);
+                const {data} = await axios.get(`http://localhost:3600/products/${subCategoryId}`);
                 setItems(data);
             }
             catch{
@@ -32,7 +32,8 @@ function FormRow() {
     return (
         <React.Fragment>
             {items.map((item) => (
-                <Grid item xs={2}>
+                // <Grid item xs={2}>
+                 <Grid item>
                     <Item info={item}></Item>
                 </Grid>
             ))}
@@ -42,9 +43,9 @@ function FormRow() {
 
 export default function NestedGrid() {
     return (
-        <Box sx={{ flexGrow: 1, margin: '3%' }}>
-            <Grid container spacing={1}>
-                <Grid container item spacing={4}>
+        <Box sx={{ flexGrow: 1, margin: '3%'}}>
+            <Grid container spacing={1} sx={{ display: 'flex',flexWrap: 'wrap', justifyContent:'center'}}>
+                <Grid container item spacing={4} sx={{ display: 'flex',flexWrap: 'wrap', justifyContent:'center'}}>
                     <FormRow />
                 </Grid>
             </Grid>
