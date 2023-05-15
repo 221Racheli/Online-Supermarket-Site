@@ -17,7 +17,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import axios from 'axios';
 import BasicMenu from "./SubCategory"
-import SearchAppBar from "../general/search"
+import SearchAppBar from "../Search/search"
 import CustomizedBadges from "../general/cart"
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
@@ -80,7 +80,6 @@ function ResponsiveAppBar() {
         <Toolbar disableGutters>
           {logedIn == true ?
             <Box sx={{ flexGrow: 0 }}>
-
               <Tooltip title="החשבון שלי">
                 <IconButton id="החשבון שלי" onClick={(e) => handleNavigate(e.currentTarget.id)} sx={{ p: 0 }}>
                   <AccountCircleIcon />

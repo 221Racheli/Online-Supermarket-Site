@@ -12,78 +12,73 @@ import Stack from '@mui/material/Stack';
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
 
-function BasicAlerts({success}) {
-  
-  return (
-    <Stack sx={{ width: '100%' }} spacing={2}>
-      {!success&& <Alert severity="error">פנייתך לא התקבלה אנא נסה שנית</Alert>}
-      
-     { success&&<Alert severity="success">פנייתך התקבלה בהצלחה ותטופל בהקדם</Alert>}
-    </Stack>
-  );
-}
-    
+// function BasicAlerts({ success }) {
+
+//   return (
+//     <Stack sx={{ width: '100%' }} spacing={2}>
+//       {!success && <Alert severity="error">פנייתך לא התקבלה אנא נסה שנית</Alert>}
+
+//       {success && <Alert severity="success">פנייתך התקבלה בהצלחה ותטופל בהקדם</Alert>}
+//     </Stack>
+//   );
+// }
+
 export default function FormDialog() {
+
   const navigate = useNavigate();
-  const [success,setSuccess]=useState(false);
-  const [alert,setAlert]=useState("")
-  const handleSubmit =async (event) => {
-    handleClose();
-    event.preventDefault(); 
-    const newContent=`name: ${name} email: ${email} content:${content}`;
-    const res = await axios.post('http://localhost:3600/reviews', {content: newContent},{
-      headers: {
-        'authorization':`Bearer ${localStorage.getItem('token')}`,
-        'content-type': 'application/json'
-      }
-    })
-    if(res.statusText=='Created')
-      setSuccess(true);
-    
-    else
-      {setSuccess(false);}
-    setAlert(true);
-  console.log(alert)
-}
-    
+  const [success, setSuccess] = useState(false);
+  const [alert, setAlert] = useState(false);
   const [open, setOpen] = React.useState(true);
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [content, setContent] = React.useState("");
- 
+
+
+  const handleSubmit = async (event) => {
+    handleClose();
+    event.preventDefault();
+    const newContent = `name: ${name} email: ${email} content:${content}`;
+    const res = await axios.post('http://localhost:3600/reviews', { content: newContent }, {
+      headers: {
+        'authorization': `Bearer ${localStorage.getItem('token')}`,
+        'content-type': 'application/json'
+      }
+    })
+    if (res.statusText == 'Created')
+      setSuccess(true);
+
+    else {
+      setSuccess(false);
+    }
+  }
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
     navigate(-1);
-    setOpen(false); 
+    setOpen(false);
+    setAlert(true);
   };
 
   const handleChange = event => {
-    if (event.target.id=='name')
+    if (event.target.id == 'name')
       setName(event.target.value);
-    if (event.target.id=='email')
+    if (event.target.id == 'email')
       setEmail(event.target.value);
     else
       setContent(event.target.value);
 
-    
+
   };
 
   return (
-
-    <div>
-      {/* <Button variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
-      </Button> */}
-      {alert&&<BasicAlerts success={success}/>}
+    <>
+      {alert && <Alert severity="error">This is an error alert — check it out!</Alert>}
       <Dialog open={open} >
         <DialogTitle>צור קשר</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            
-          </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
@@ -120,10 +115,7 @@ export default function FormDialog() {
           <Button onClick={handleSubmit}>Submit</Button>
         </DialogActions>
       </Dialog>
-    
-    
-    </div>
-   
+    </>
   );
-    }
+}
 

@@ -14,7 +14,7 @@ import Button from '@mui/material/Button';
 
 
 export default function BarGraph({ orderData }) {
-    const [mapData, setMapData] = useState(orderData);
+    const [mapData, setMapData] = useState([...orderData]);
     const [message, setMessage] = useState('');
     const [startDate, setStartDate] = useState(new Date().toISOString().slice(0, 10));
     const [endDate, setEndDate] = useState(new Date(new Date().setMonth(new Date().getMonth() - 3)).toISOString().slice(0, 10));
@@ -29,12 +29,12 @@ export default function BarGraph({ orderData }) {
                         'content-type': 'application/json'
                     }
                 })
-                const newData = data.map(d => { return { name: d.createdAt.slice(0,7), pv: d.totalPrice } });
+                const newData = data.map(d => { return { name: d.createdAt.slice(0,7), sum: d.totalPrice } });
                 const dates = newData.map(element=>element.name);
                 const unique = dates.filter((value, index, array) => array.indexOf(value) === index);
-                let arrangeData= unique.map(d=>{return {name: d, pv: 0}})
+                let arrangeData= unique.map(d=>{return {name: d, sum: 0}})
                 newData.forEach(d=>{
-                    arrangeData[unique.indexOf(d.name)].pv+=d.pv
+                    arrangeData[unique.indexOf(d.name)].sum+=d.sum
                 })
                 setMapData([...arrangeData]);
             }
@@ -85,7 +85,7 @@ export default function BarGraph({ orderData }) {
             <BarChart
                 width={500}
                 height={300}
-                data={mapData}
+                data={mapData.length>0 ? mapData :orderData}
                 margin={{
                     top: 5,
                     right: 30,
@@ -99,7 +99,7 @@ export default function BarGraph({ orderData }) {
                 <Tooltip />
                 <Legend />
                 <CartesianGrid strokeDasharray="3 3" />
-                <Bar dataKey="pv" fill="#8884d8" background={{ fill: "#eee" }} />
+                <Bar dataKey="sum" fill="#8884d8" background={{ fill: "#eee" }} />
             </BarChart>
         </Container>
     );

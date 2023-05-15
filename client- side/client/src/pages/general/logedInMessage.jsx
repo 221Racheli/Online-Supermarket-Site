@@ -25,7 +25,7 @@ export default function AlertDialogLogedIn() {
       navigate('/signin');
     }
     else{
-      // navigate(-1)
+       //navigate(-1)
       navigate(-2)
     }
     setOpen(false);

@@ -38,12 +38,6 @@ export default function AlertDialogLogOut({ setting }) {
                 <DialogTitle id="alert-dialog-title">
                     {"? להתנתק"}
                 </DialogTitle>
-                {/* <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent> */}
                 <DialogActions>
                     <Button name="yes" onClick={(e) => { handleClose(e.currentTarget.name) }}>כן</Button>
                     <Button name="no" onClick={(e) => { handleClose(e.currentTarget.name) }} autoFocus>

@@ -22,25 +22,23 @@ export default function CenteredTabs() {
   }
 
   async function fetcData() {
-    setOpenOrders(false);
-    setOpenInfo(false);
     const defualEnd = new Date().toISOString().slice(0, 10);
-    const defualtStart = new Date(new Date().setMonth(new Date().getMonth() - 36)).toISOString().slice(0, 10);
+    const defualtStart = new Date(new Date().setMonth(new Date().getMonth() - 3)).toISOString().slice(0, 10);
+    console.log(defualtStart)
     const { data } = await axios.get(`http://localhost:3600/orders/account?startDate=${defualtStart}&endDate=${defualEnd}`, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('token')}`,
         'content-type': 'application/json'
       }
     })
-    const newData = data.map(d => { return { name: d.createdAt.slice(0,7), pv: d.totalPrice } });
+    const newData = data.map(d => { return { name: d.createdAt.slice(0,7), sum: d.totalPrice } });
     const dates = newData.map(element=>element.name);
     const unique = dates.filter((value, index, array) => array.indexOf(value) === index);
-    let arrangeData= unique.map(d=>{return {name: d, pv: 0}})
+    let arrangeData= unique.map(d=>{return {name: d, sum: 0}})
     newData.forEach(d=>{
-        arrangeData[unique.indexOf(d.name)].pv+=d.pv
+        arrangeData[unique.indexOf(d.name)].sum+=d.sum
     })
     setDataToBar([...arrangeData]);
-    setOpenGraph(true);
   }
 
 
@@ -51,8 +49,7 @@ export default function CenteredTabs() {
         <Tabs value={value} onChange={handleChange} centered dir="rtl" sx={{backgroundColor:'white'}}>
           <Tab label={"פרטים אישיים"} value={0}/> 
           <Tab label="הזמנות קודמות" value={1} />
-          <Tab label="גרפים של קניות" />
-          {/*  onClick={fetcData} */}
+          <Tab label="גרפים של קניות" onClick={fetcData} />
         </Tabs>
       </Box>
       {value===0 && <NestedList />}

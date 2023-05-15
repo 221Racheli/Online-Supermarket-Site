@@ -8,12 +8,13 @@ import Typography from '@mui/material/Typography';
 import LargeItem from './LargeItem';
 import CardActionArea from '@mui/material/CardActionArea';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import SellIcon from '@mui/icons-material/Sell';
 import IconButton from '@mui/material/IconButton';
 import { CartContext } from '../cart/cart';
 import { useContext } from "react"
 
 
-export default function Item({ info}) {
+export default function Item({ info }) {
 
   const [open, setOpen] = React.useState(false);
   const [amountItem, setAmountItem] = React.useState(0);
@@ -42,21 +43,21 @@ export default function Item({ info}) {
     }
 
     else {
-      products[ind].quantity+=amountItem;
-    } 
+      products[ind].quantity += amountItem;
+    }
     localStorage.setItem("cart", JSON.stringify(products));
     localStorage.setItem("amount", amount + amountItem);
     setAmount(amount + amountItem);
   }
 
-
   return (
     <>
-      <Card sx={{ maxWidth: 345,alignItems:'center' }}>
+      <Card sx={{ maxWidth: 345, alignItems: 'center' }}>
         <CardActionArea onClick={() => setOpen(true)}>
+          {info.sale > 0 && <SellIcon></SellIcon>}
           <CardMedia
             className='product-image'
-            sx={{ height: 180 ,alignItems:'center'}}
+            sx={{ height: 180, alignItems: 'center' }}
             image={`/images/${info.subcategory_id}/${info.picture}`}
             title={info.name}
           />
@@ -65,11 +66,26 @@ export default function Item({ info}) {
             </Typography>
             <Typography variant="body2" color="text.secondary" textAlign="center">
               {info.name}
-              <br />
-              {info.company}
-              <br />
-              &#8362; {info.price}
+
             </Typography>
+            <Typography variant="body2" color="text.secondary" textAlign="center">
+              {info.company}
+            </Typography>
+            {info.sale == 0 ?
+              <Typography variant="body2" color="text.secondary" textAlign="center">
+                &#8362; {info.price}
+              </Typography>
+              :
+              <Typography textAlign="center">
+                <Typography variant="body2" display={'inline'} color="text.secondary" textAlign="center" sx={{ textDecorationLine: 'line-through', textDecorationStyle: 'solid' }}>
+                  {`${info.price} `}
+                </Typography>
+                <Typography variant="body2" display={'inline'} color="text.secondary" textAlign="center">
+                  &#8362; {(info.price *(1-info.sale/100)).toFixed(2)}
+                </Typography>
+              </Typography>
+            }
+
           </CardContent>
         </CardActionArea>
         <CardActions>

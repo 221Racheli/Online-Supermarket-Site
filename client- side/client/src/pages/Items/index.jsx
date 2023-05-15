@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Item from './Item';
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
+
 
 
 
@@ -32,7 +31,6 @@ function FormRow() {
     return (
         <React.Fragment>
             {items.map((item) => (
-                // <Grid item xs={2}>
                  <Grid item>
                     <Item info={item}></Item>
                 </Grid>

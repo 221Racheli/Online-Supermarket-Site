@@ -12,20 +12,20 @@ import { Typography } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
 import { useContext } from "react";
-// import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 
-// const useStyles = makeStyles(theme => ({
-//   offset: {
-//     ...theme.mixins.toolbar,
-//     flexGrow: 1
-//   }
-// }))
+const useStyles = makeStyles(theme => ({
+  offset: {
+    ...theme.mixins.toolbar,
+    flexGrow: 1
+  }
+}))
 
-// function AppBarOffset() {
-//   const classes = useStyles();
-//   return <div className={classes.offset} />;
-// }
+function AppBarOffset() {
+  const classes = useStyles();
+  return <div className={classes.offset} />;
+}
 export default function BottomAppBar() {
 	const navigate = useNavigate();
 	
@@ -58,8 +58,8 @@ export default function BottomAppBar() {
 				<EmailIcon sx={{ marginRight: '5px' }} />
 			</Toolbar>
 		</AppBar>
-		{/* <AppBarOffset></AppBarOffset>
-  */}
+		<AppBarOffset></AppBarOffset>
+ 
 	  </>
 	);
 }

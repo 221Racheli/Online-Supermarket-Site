@@ -88,32 +88,39 @@ function handleChange(e) {
 
 
 export default function SpanningTable() {
-    const { amount, setAmount, products, setProducts, totalSum, setTotalSum ,total} = useContext(CartContext);
-    const rows = products.map(prod => createRow(prod.name, prod.quantity, prod.price, prod.product_id));
-    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
+    const { amount, setAmount, products, setProducts, totalSum, setTotalSum, total } = useContext(CartContext);
+    const navigate = useNavigate();
+
+    const rows = products.map(prod => createRow(prod.name, prod.quantity, prod.price, prod.product_id));
+
     async function handleOrder() {
-        products.forEach(async(product)=>{
-            console.log(product);
+        console.log("handleOrder"); 
+        products.forEach(async (product) => {
+            const res = await axios.put('http://localhost:3600/products', { productToDelete: product },
+                {
+                    headers: {
+                        'authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'content-type': 'application/json'
+                    }
+                });
 
-
-        const res= await axios.put('http://localhost:3600/products', {productToDelete:product },
-        {
-            headers: {
-                'authorization': `Bearer ${localStorage.getItem('token')}`,
-                'content-type': 'application/json'
-            }
         });
-    
-        });
-        const res = await axios.post('http://localhost:3600/orders', { totalPrice: totalSum, orderedProducts: products },
+        const response = await axios.post('http://localhost:3600/orders', { totalPrice: totalSum, orderedProducts: products },
             {
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('token')}`,
                     'content-type': 'application/json'
                 }
             })
-    
+        console.log(response);
+        if (response.statusText == 'Created') {
+            localStorage.removeItem('cart');
+            localStorage.removeItem('amount');
+            setProducts([]);
+            setAmount(0);
+            setTotalSum(0);
+        }
         setOpen(true);
         navigate("/");
 
