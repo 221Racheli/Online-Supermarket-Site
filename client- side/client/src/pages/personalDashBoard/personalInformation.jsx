@@ -20,7 +20,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 
 const handleSaveInfo=async(e,info,kind)=>{
-console.log("iiiiiiiiiiiiiiiii"+info);
+console.log(info);
 const params = kind=='first_name'?{first_name : info}:kind=='last_name'?{}:{};
   const res=await axios.put('http://localhost:3600/users',params , {
     headers: {
@@ -29,6 +29,8 @@ const params = kind=='first_name'?{first_name : info}:kind=='last_name'?{}:{};
     }
 });
 }
+
+
 const NestedList=()=> {
   const [open, setOpen] = useState(true);
   const [editFirstName, setEditFirstName] = useState(true);
