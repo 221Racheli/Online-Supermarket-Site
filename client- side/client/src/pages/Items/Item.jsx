@@ -35,7 +35,7 @@ export default function Item({ info }) {
 
   const addToCart = () => {
     setAmountItem(0);
-    setTotalSum(totalSum + (amountItem * info.price));
+    setTotalSum(totalSum + (amountItem * info.price*(1-info.sale/100)));
     const ind = products.findIndex(prod => prod.product_id == info.product_id);
     if (ind < 0) {
       products.push({ ...info, "quantity": amountItem });
@@ -52,9 +52,9 @@ export default function Item({ info }) {
 
   return (
     <>
-      <Card sx={{ maxWidth: 345, alignItems: 'center' }}>
+      <Card sx={{ maxWidth: 345, alignItems: 'center'}}>
         <CardActionArea onClick={() => setOpen(true)}>
-          {info.sale > 0 && <SellIcon></SellIcon>}
+          {info.sale > 0 && <SellIcon sx={{position: 'absolute', top:0, left:0,}}></SellIcon>}
           <CardMedia
             className='product-image'
             sx={{ height: 180, alignItems: 'center' }}
@@ -66,7 +66,6 @@ export default function Item({ info }) {
             </Typography>
             <Typography variant="body2" color="text.secondary" textAlign="center">
               {info.name}
-
             </Typography>
             <Typography variant="body2" color="text.secondary" textAlign="center">
               {info.company}

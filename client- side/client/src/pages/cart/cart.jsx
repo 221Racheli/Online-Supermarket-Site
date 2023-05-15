@@ -66,11 +66,10 @@ export default function AlertDialog({ children }) {
                             bgcolor: 'background.paper',
                         }}
                     >
-                        {/* {console.log(products)} */}
                         {products.map((prod) => (
                             <>
                                 <ListItem key={prod.product_id}>
-                                    <ListItemText primary={`מוצר :${prod.name} כמות :${prod.quantity}`} secondary={prod.price} />
+                                    <ListItemText primary={`מוצר :${prod.name} כמות :${prod.quantity}`} secondary={prod.price *(1-prod.sale/100)} />
                                 </ListItem>
                                 <Divider variant="inset" component="li" />
                             </>

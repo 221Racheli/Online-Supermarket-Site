@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import SellIcon from '@mui/icons-material/Sell';
 
 
 const style = {
@@ -40,6 +41,7 @@ function LargeItem({ openStatus, setopenStatus, info }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+        {info.sale > 0 && <SellIcon sx={{position: 'absolute', top:0, left:0,}}></SellIcon>}
           <img
             src={`/images/${info.subcategory_id}/${info.picture}`}
             // srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
@@ -50,7 +52,20 @@ function LargeItem({ openStatus, setopenStatus, info }) {
           />
           <Typography id="modal-modal-description" align='center'>{info.name}</Typography>
           <Typography id="modal-modal-description" align='center'>{info.company}</Typography>
-          <Typography id="modal-modal-description" align='center'>&#8362; {info.price}</Typography>
+          {info.sale == 0 ?
+              <Typography variant="body2" color="text.secondary" textAlign="center">
+                &#8362; {info.price}
+              </Typography>
+              :
+              <Typography textAlign="center">
+                <Typography variant="body2" display={'inline'} color="text.secondary" textAlign="center" sx={{ textDecorationLine: 'line-through', textDecorationStyle: 'solid' }}>
+                  {`${info.price} `}
+                </Typography>
+                <Typography variant="body2" display={'inline'} color="text.secondary" textAlign="center">
+                  &#8362; {(info.price *(1-info.sale/100)).toFixed(2)}
+                </Typography>
+              </Typography>
+            }
 
         </Box>
       </Modal>

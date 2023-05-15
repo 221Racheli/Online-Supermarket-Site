@@ -92,7 +92,7 @@ export default function SpanningTable() {
     const { amount, setAmount, products, setProducts, totalSum, setTotalSum, total } = useContext(CartContext);
     const navigate = useNavigate();
 
-    const rows = products.map(prod => createRow(prod.name, prod.quantity, prod.price, prod.product_id));
+    const rows = products.map(prod => createRow(prod.name, prod.quantity, prod.price*(1-prod.sale/100), prod.product_id));
 
     async function handleOrder() {
         console.log("handleOrder"); 
@@ -148,7 +148,7 @@ export default function SpanningTable() {
             setAmount(newAmount);
             console.log(newAmount);
             localStorage.setItem("amount", newAmount);
-
+            setTotalSum(0);
             itemsToDelete = [];
         }
     }
