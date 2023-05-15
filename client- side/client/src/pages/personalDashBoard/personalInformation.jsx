@@ -29,7 +29,28 @@ const handleSaveInfo = async (e, info, kind) => {
     }
   });
 }
-const NestedList = () => {
+
+const NestedList=()=> {
+
+  useEffect=(()=>{
+async function fetchPersonalInformation()
+{
+  return  {first_name,last_name,user_name,phone_number1,phone_number2,address,email}=await axios.get('http://localhost:3600/users',  {
+      headers: {
+          'authorization': `Bearer ${localStorage.getItem('token')}`,
+          'content-type': 'application/json'
+      }
+  });
+}
+const {first_name,last_name,user_name,phone_number1,phone_number2,address,email}=fetchPersonalInformation();
+    setFirst_name(first_name);
+    setLast_name(last_name);
+    setUser_name(user_name);
+    setPhone_number1(phone_number1);
+    setPhone_number2(phone_number2);
+    setAddress(address);
+    setEmail(email);
+  },[])
   const [open, setOpen] = useState(true);
   const [editFirstName, setEditFirstName] = useState(true);
   const [editLastName, setEditLastName] = useState(true);
