@@ -2,10 +2,12 @@ import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import IconButton from '@mui/material/IconButton';
 import axios from 'axios'
 import { useState } from 'react';
 import SearchResults from './searchResultsPop';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -72,28 +74,32 @@ export default function SearchAppBar() {
   //   fetchData();
   // },[])
 
-  const fetchData = async (word) => {
-    try {
-      const { data } = await axios.get(`http://localhost:3600/products/search?keyWord=${word}`);
-      if (data.length > 1) {
-        setOpenResults(true);
-        setDataFromFetch(data);
-        setKeyWord(word);
-      }
-    }
-    catch (err) {
-      console.log(err);
-    }
-  }
+  // const fetchDataOnClick = async (word) => {
+  //   try {
+  //     const { data } = await axios.get(`http://localhost:3600/products/search?keyWord=${word}`);
+  //     if (data.length > 1) {
+  //       setOpenResults(true);
+  //       setDataFromFetch(data);
+  //       setKeyWord(word);
+  //     }
+  //   }
+  //   catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
 
+  const navigate=useNavigate();
 
   return (
     <>
-      <Search onChange={(e) => { fetchData(e.target.value) }}>
-        <SearchIconWrapper>
+      <Search>
+        <IconButton onClick={(e) => { navigate(`/search/${e.target.value}`) }}>
+          <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>
+        </IconButton>
+        
         <StyledInputBase
           placeholder="...חיפוש"
           inputProps={{ 'aria-label': 'search' }}

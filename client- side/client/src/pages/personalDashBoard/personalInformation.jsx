@@ -17,27 +17,30 @@ import TextField from '@mui/material/TextField';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
+import { useEffect } from 'react';
 
-// async function fetchPersonalInformation()
-// {
-//     return {first_name,last_name,user_name,phone_number1,phone_number2,address,email}=await axios.get('http://localhost:3600/users',  {
-//       headers: {
-//           'authorization': `Bearer ${localStorage.getItem('token')}`,
-//           'content-type': 'application/json'
-//       }
-//   });
-//   // setFirst_name(first_name);
-//   // setLast_name(last_name);
-//   // setUser_name(user_name);
-//   // setPhone_number1(phone_number1);
-//   // setPhone_number2(phone_number2);
-//   // setAddress(address);
-//   // setEmail(email);
 
-// }
-
-// const data=fetchPersonalInformation();
 const NestedList=()=> {
+
+  useEffect=(()=>{
+async function fetchPersonalInformation()
+{
+  return  {first_name,last_name,user_name,phone_number1,phone_number2,address,email}=await axios.get('http://localhost:3600/users',  {
+      headers: {
+          'authorization': `Bearer ${localStorage.getItem('token')}`,
+          'content-type': 'application/json'
+      }
+  });
+}
+const {first_name,last_name,user_name,phone_number1,phone_number2,address,email}=fetchPersonalInformation();
+    setFirst_name(first_name);
+    setLast_name(last_name);
+    setUser_name(user_name);
+    setPhone_number1(phone_number1);
+    setPhone_number2(phone_number2);
+    setAddress(address);
+    setEmail(email);
+  },[])
   const [open, setOpen] = useState(true);
   const [editFirstName, setEditFirstName] = useState(true);
   const [editLastName, setEditLastName] = useState(true);
@@ -56,7 +59,7 @@ const NestedList=()=> {
   const handleClick = () => {
     setOpen(!open);
   };
-console.log("Im here");
+
   return (
     <Container>
     <List 
@@ -71,11 +74,11 @@ console.log("Im here");
     >
       <ListItem >
         <TextField
-         disabled={editFirstName}
-          id="filled-disabled"
-          label="First Name"
-          defaultValue="kaila"
-          variant="filled"
+        disabled={editFirstName}
+        id="filled-disabled"
+        label="First Name"
+        defaultValue={first_name}
+        variant="filled"
         />
         {editFirstName &&<IconButton onClick={(e)=>setEditFirstName(false)}>
         < EditIcon/>
@@ -93,7 +96,7 @@ console.log("Im here");
          disabled={editLastName}
           id="filled-disabled"
           label="Last Name"
-          defaultValue="Hartman"
+          defaultValue={last_name}
           variant="filled"
         />
         <IconButton onClick={(e)=>setEditLastName(!editLastName)}>
@@ -106,7 +109,7 @@ console.log("Im here");
          disabled={editEmail}
           id="filled-disabled"
           label="Email Address"
-          defaultValue="kaila@gmail.com"
+          defaultValue={email}
           variant="filled"
         />
         <IconButton onClick={(e)=>setEditEmail(!editEmail)}>

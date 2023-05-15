@@ -21,7 +21,6 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { CartContext } from '../cart/cart';
 import { useContext } from 'react';
 
-
 let itemsToAddToCart = [];
 
 function handleChange(e, info) {
@@ -119,7 +118,9 @@ function Row(props) {
     });
   }
   return (
-    <React.Fragment>
+   
+    <React.Fragment> 
+      
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }} dir="rtl">
         <TableCell align="right">
           <IconButton
@@ -176,7 +177,9 @@ function Row(props) {
           </Collapse>
         </TableCell>
       </TableRow>
+    
     </React.Fragment>
+    
   );
 }
 

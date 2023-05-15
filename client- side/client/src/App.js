@@ -14,6 +14,7 @@ import AlertDialogLogedIn from './pages/general/logedInMessage'
 import BarGraph from './pages/personalDashBoard/graphs'
 import AlertDialogLogOut from './pages/general/logout'
 import { AuthContextProvider } from './context/AuthContext';
+import SearchPage from "./pages/general/searchPage";
 
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
             <Route path='/account' element={<CenteredTabs />} />
             <Route path='/graph' element={<BarGraph/>}/>
             <Route path='/logOut'element={<AlertDialogLogOut setting={true}/>} />
-            {/* <Route path='/search/:searchParamter'element={()=>{}} /> */}
+            <Route path='/search/:searchParamter'element={<SearchPage/>} />
             <Route path='*' element={<h1> 404 Page not found</h1>} />
           </Routes>
         </AlertDialog>
