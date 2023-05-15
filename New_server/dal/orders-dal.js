@@ -38,7 +38,7 @@ getPreviousSumOfOrders=async(id,startDate,endDate)=>{
 //checked 👍
 AddOrder=async(customer_id,totalPrice,orderedProducts)=>{
     const newOrder = await Order.create({customer_id,status:'created',totalPrice});
-    const newOrdProds = await OrdProds.bulkCreate(orderedProducts.map(x=>({ ...x, order_id:newOrder.order_id})));
+    const newOrdProds = await OrdProds.bulkCreate(orderedProducts.map(x=>({ ...x,price:x.price**(1-x.sale/100) ,order_id:newOrder.order_id})));
     return {newOrder,newOrdProds};
     }
 }
