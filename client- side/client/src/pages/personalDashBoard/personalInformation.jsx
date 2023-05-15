@@ -99,7 +99,7 @@ const {first_name,last_name,user_name,phone_number1,phone_number2,address,email}
         label="First Name"
         defaultValue={first_name}
         value={first_name}
-        variant="filled"
+        variant="standard"
         onChange={(e)=>{setFirst_name(e.target.value)}}
         />
         {editFirstName &&<IconButton onClick={(e)=>setEditFirstName(false)}>
@@ -120,12 +120,18 @@ const {first_name,last_name,user_name,phone_number1,phone_number2,address,email}
           label="Last Name"
           defaultValue={last_name}
           value={last_name}
-          variant="filled"
+          variant="standard"
           onChange={(e, val)=>{setLast_name(val)}}
         />
-        <IconButton onClick={(e)=>setEditLastName(!editLastName)}>
+         {editLastName &&<IconButton onClick={(e)=>setEditLastName(false)}>
         < EditIcon/>
-        </IconButton>
+        </IconButton>}
+        {!editLastName &&<IconButton onClick={(e)=>{console.log("ertyui"+last_name);handleSaveInfo(e,last_name,"last_name");setEditLastName(true)}}>
+        < CheckIcon/>
+        </IconButton>}
+        {!editLastName &&<IconButton onClick={(e)=>setEditLastName(true)}>
+        < CloseIcon/>
+        </IconButton>}
    </ListItem>
    <ListItem >
        
@@ -135,38 +141,57 @@ const {first_name,last_name,user_name,phone_number1,phone_number2,address,email}
           label="Email Address"
           defaultValue={email}
           value={email}
-          variant="filled"
+          variant="standard"
           onChange={(e, val)=>{setEmail(val)}}
         />
-        <IconButton onClick={(e)=>setEditEmail(!editEmail)}>
+         {editEmail &&<IconButton onClick={(e)=>setEditEmail(false)}>
         < EditIcon/>
-        </IconButton>
+        </IconButton>}
+        {!editEmail &&<IconButton onClick={(e)=>{console.log("ertyui"+email);handleSaveInfo(e,email,"email");setEditEmail(true)}}>
+        < CheckIcon/>
+        </IconButton>}
+        {!editEmail &&<IconButton onClick={(e)=>setEditEmail(true)}>
+        < CloseIcon/>
+        </IconButton>}
    </ListItem>
    <ListItem >
        
         <TextField
          disabled={editPhone1}
           id="filled-disabled"
-          label="name"
-          defaultValue="קילא"
-          variant="filled"
+          label="phone_number_1"
+          defaultValue={phone_number1}
+          value={phone_number1}
+          variant="standard"
         />
-        <IconButton onClick={(e)=>setEditPhone1(!editPhone1)}>
+        {editPhone1 &&<IconButton onClick={(e)=>setEditPhone1(false)}>
         < EditIcon/>
-        </IconButton>
+        </IconButton>}
+        {!editPhone1 &&<IconButton onClick={(e)=>{console.log("fhGFj"+phone_number1);;handleSaveInfo(e,phone_number1,"phone_number1");setEditPhone1(true)}}>
+        < CheckIcon/>
+        </IconButton>}
+        {!editPhone1 &&<IconButton onClick={(e)=>setEditPhone1(true)}>
+        < CloseIcon/>
+        </IconButton>}
    </ListItem>
-   <ListItem id="item1">
+   <ListItem >
        
         <TextField
          disabled={editphone2}
           id="filled-disabled"
           label="name"
           defaultValue="קילא"
-          variant="filled"
+          variant="standard"
         />
-        <IconButton onClick={(e)=>setEditPhone2(!editphone2)}>
+         {editFirstName &&<IconButton onClick={(e)=>setEditFirstName(false)}>
         < EditIcon/>
-        </IconButton>
+        </IconButton>}
+        {!editFirstName &&<IconButton onClick={(e)=>{console.log("ertyui"+first_name);handleSaveInfo(e,first_name,"first_name");setEditFirstName(true)}}>
+        < CheckIcon/>
+        </IconButton>}
+        {!editFirstName &&<IconButton onClick={(e)=>setEditFirstName(true)}>
+        < CloseIcon/>
+        </IconButton>}
    </ListItem>
       <ListItemButton>
        
