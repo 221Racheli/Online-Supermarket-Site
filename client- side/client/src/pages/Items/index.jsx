@@ -18,7 +18,7 @@ function FormRow() {
         async function fetchData() {
             try{
                 const {data} = await axios.get(`http://localhost:3600/products/${subCategoryId}`);
-                setItems(data);
+                setItems(data.filter(d=>d.isActive==1));
             }
             catch{
                 setItems([]); 

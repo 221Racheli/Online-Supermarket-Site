@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { styled } from '@mui/material/styles';
 import { useEffect, useState } from "react";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -10,7 +11,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LoginIcon from '@mui/icons-material/Login';
@@ -22,6 +22,19 @@ import CustomizedBadges from "../general/cart"
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
 import { useContext } from "react";
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+
+
+const BootstrapTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: theme.palette.common.black,
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: theme.palette.common.black,
+  },
+}));
 
 
 const settings = ['החשבון שלי', 'יציאה'];
@@ -61,10 +74,10 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const logOut = () => {
-    setLogedIn(false);
-    localStorage.setItem('token', null);
-  }
+  // const logOut = () => {
+  //   setLogedIn(false);
+  //   localStorage.setItem('token', null);
+  // }
 
   useEffect(() => {
     async function fetchData() {
@@ -92,16 +105,15 @@ function ResponsiveAppBar() {
               </Tooltip>
             </Box> :
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="כניסה">
-                <IconButton id="כניסה" onClick={(e) => handleNavigate(e.currentTarget.id)} sx={{ p: 0 }}>
-                  <LoginIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="הרשמה">
-                <IconButton id="הרשמה" onClick={(e) => handleNavigate(e.currentTarget.id)} sx={{ p: 0 }}>
-                  <LoginIcon />
-                </IconButton>
-              </Tooltip></Box>}
+              <BootstrapTooltip title={
+                <>
+                  <Button id="כניסה" onClick={(e) => handleNavigate(e.currentTarget.id)} sx={{ p: 0 }}>כניסה</Button>
+                  <Button id="הרשמה" onClick={(e) => handleNavigate(e.currentTarget.id)} sx={{ p: 0 }}>הרשמה</Button>
+                </>
+              }>
+                <LoginIcon />
+              </BootstrapTooltip>
+            </Box>}
           <SearchAppBar></SearchAppBar>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} >
             <IconButton

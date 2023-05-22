@@ -88,10 +88,10 @@ export default function Item({ info }) {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button variant="outlined" size='small' id="increase" onClick={(e) => { amountSetting(e.currentTarget.id) }}>+</Button>
-          <Typography>{amountItem}</Typography>
-          <Button variant="outlined" size='small' id="decrease" onClick={(e) => { amountSetting(e.currentTarget.id) }}>-</Button>
-          <IconButton onClick={addToCart} color="primary" aria-label="add to shopping cart">
+          <Button variant="outlined" size='small' id="increase" disabled={info.amount==0} onClick={(e) => { amountSetting(e.currentTarget.id) }}>+</Button>
+          <Typography textAlign={'center'}>{amountItem}</Typography>
+          <Button variant="outlined" size='small' id="decrease" disabled={info.amount==0} onClick={(e) => { amountSetting(e.currentTarget.id) }}>-</Button>
+          <IconButton onClick={addToCart} color="primary" aria-label="add to shopping cart" disabled={info.amount==0}>
             <AddShoppingCartIcon />
           </IconButton>
         </CardActions>
