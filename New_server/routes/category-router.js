@@ -12,4 +12,3 @@ categoryRouter.route("/:categoryId")
     
 
 module.exports = categoryRouter;
-
