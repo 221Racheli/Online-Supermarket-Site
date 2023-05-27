@@ -69,8 +69,8 @@ class UsersContoller {
     }
 
     updatePersonalDetails = async (req, res) => {
-        const { first_name, last_name, user_name, password, email, phone_number1, phone_number2, address } = req.body;
-        const detailsToUpdate = { first_name, last_name, user_name, password, email, phone_number1, phone_number2, address }
+        const { first_name, last_name, user_name, email, phone_number1, phone_number2, address } = req.body;
+        const detailsToUpdate = { first_name, last_name, user_name, email, phone_number1, phone_number2, address }
         await usersDal.updatePersonalDetails(req.user.customer_id, detailsToUpdate);
         res.send("updated successfully");
     }

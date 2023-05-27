@@ -1,45 +1,40 @@
-import { useCallback, useState } from 'react';
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  Divider,
-  TextField,
-  Unstable_Grid2 as Grid
-} from '@mui/material';
+import { useCallback, useEffect, useState } from 'react';
+import {Box,Button,Card,CardActions,CardContent,CardHeader,Divider,TextField,Unstable_Grid2 as Grid} from '@mui/material';
+import axios from 'axios';
 
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  },
-  {
-    value: 'los-angeles',
-    label: 'Los Angeles'
-  }
-];
 
-export const AccountProfileDetails = () => {
+const updateUser=async(e,values,setUser)=>{
+
+  const correctDataToSend={
+    first_name:values.firstName,
+    last_name:values.lastName,
+    email: values.email,
+    phone_number1:values.phone1,
+    phone_number2:values.phone1 ,
+    address: values.address,
+    user_name:values.userName}
+    console.log("!!!!!!!!!!!!!!"+correctDataToSend);
+  const res=await axios.put('http://localhost:3600/users',correctDataToSend , {
+    headers: {
+        'authorization': `Bearer ${localStorage.getItem('token')}`,
+        'content-type': 'application/json'
+    }
+});
+if (res.status==200)
+  setUser(...values);
+}
+
+export const AccountProfileDetails = ({user,setUser}) => {
+  
   const [values, setValues] = useState({
-    firstName: 'Anika',
-    lastName: 'Visser',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'los-angeles',
-    country: 'USA'
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    phone1: user.phone1,
+    phone2: user.phone2,
+    address: user.address,
+    userName: user.userName
   });
-
   const handleChange = useCallback(
     (event) => {
       setValues((prevState) => ({
@@ -58,15 +53,15 @@ export const AccountProfileDetails = () => {
   );
 
   return (
-    <form
+    <form 
       autoComplete="off"
       noValidate
       onSubmit={handleSubmit}
     >
-      <Card>
+      <Card dir="rtl">
         <CardHeader
-          subheader="The information can be edited"
-          title="Profile"
+          subheader="הפרטים ניתנים לעריכה"
+          title="פרופיל"
         />
         <CardContent sx={{ pt: 0 }}>
           <Box sx={{ m: -1.5 }}>
@@ -80,8 +75,8 @@ export const AccountProfileDetails = () => {
               >
                 <TextField
                   fullWidth
-                  helperText="Please specify the first name"
-                  label="First name"
+                  helperText="נא הכנס שם פרטי"
+                  label="שם פרטי"
                   name="firstName"
                   onChange={handleChange}
                   required
@@ -94,7 +89,7 @@ export const AccountProfileDetails = () => {
               >
                 <TextField
                   fullWidth
-                  label="Last name"
+                  label="שם משפחה"
                   name="lastName"
                   onChange={handleChange}
                   required
@@ -107,7 +102,7 @@ export const AccountProfileDetails = () => {
               >
                 <TextField
                   fullWidth
-                  label="Email Address"
+                  label="כתובת אימייל"
                   name="email"
                   onChange={handleChange}
                   required
@@ -118,13 +113,13 @@ export const AccountProfileDetails = () => {
                 xs={12}
                 md={6}
               >
-                <TextField
+                <TextField 
                   fullWidth
-                  label="Phone Number"
-                  name="phone"
+                  label="טלפון 1"
+                  name="phone1"
                   onChange={handleChange}
-                  type="number"
-                  value={values.phone}
+                 required
+                  value={values.phone1}
                 />
               </Grid>
               <Grid
@@ -133,11 +128,10 @@ export const AccountProfileDetails = () => {
               >
                 <TextField
                   fullWidth
-                  label="Country"
-                  name="country"
+                  label="טלפון 2"
+                  name="dme"
                   onChange={handleChange}
-                  required
-                  value={values.country}
+                  value={values.phone2}
                 />
               </Grid>
               <Grid
@@ -146,22 +140,12 @@ export const AccountProfileDetails = () => {
               >
                 <TextField
                   fullWidth
-                  label="Select State"
-                  name="state"
+                  label="כתובת"
+                  name="address"
                   onChange={handleChange}
                   required
-                  select
-                  SelectProps={{ native: true }}
-                  value={values.state}
+                  value={values.address}
                 >
-                  {states.map((option) => (
-                    <option
-                      key={option.value}
-                      value={option.value}
-                    >
-                      {option.label}
-                    </option>
-                  ))}
                 </TextField>
               </Grid>
             </Grid>
@@ -169,8 +153,8 @@ export const AccountProfileDetails = () => {
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained">
-            Save details
+          <Button onClick={(e)=>updateUser(e,values,setUser)} variant="contained">
+            שמירת השינויים
           </Button>
         </CardActions>
       </Card>

@@ -1,24 +1,7 @@
-import {
-  //Avatar,
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Divider,
-  Typography
-} from '@mui/material';
+import {Box,Button,Card,CardActions,CardContent,Divider,Typography} from '@mui/material';
 
-const user = {
- // avatar: '/assets/avatars/avatar-anika-visser.png',
-  city: 'Los Angeles',
-  country: 'USA',
-  jobTitle: 'Senior Developer',
-  name: 'Anika Visser',
-  timezone: 'GTM-7'
-};
 
-export const AccountProfile = () => (
+export const AccountProfile = ({user}) => (
   <Card>
     <CardContent>
       <Box
@@ -28,42 +11,27 @@ export const AccountProfile = () => (
           flexDirection: 'column'
         }}
       >
-        {/* <Avatar
-          src={user.avatar}
-          sx={{
-            height: 80,
-            mb: 2,
-            width: 80
-          }}
-        /> */}
         <Typography
           gutterBottom
           variant="h5"
         >
-          {user.name}
+          {user.firstName+" "}{user.lastName}
         </Typography>
         <Typography
           color="text.secondary"
           variant="body2"
         >
-          {user.city} {user.country}
+          {user.userName} 
         </Typography>
         <Typography
           color="text.secondary"
           variant="body2"
         >
-          {user.timezone}
+          {user.address}
         </Typography>
       </Box>
     </CardContent>
     <Divider />
-    <CardActions>
-      <Button
-        fullWidth
-        variant="text"
-      >
-        Upload picture
-      </Button>
-    </CardActions>
+   
   </Card>
 );
