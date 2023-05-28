@@ -31,6 +31,9 @@ register=async(first_name,last_name,user_name,password,email,phone_number1,phone
         address: address
     })
 }
+getPersonalDetails=async(customer_id)=>{
+    return await Customer.findOne({where:{customer_id:customer_id}}
+)}
 //checked👍
 checkIfExists=async(user_name)=>{
     return await Customer.findOne({where:{user_name:user_name}})

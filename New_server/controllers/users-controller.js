@@ -65,7 +65,10 @@ class UsersContoller {
     }
 
     getPersonalDetails = async (req, res) => {
-        res.send(req.user);
+        const user=await usersDal.getPersonalDetails(req.user.customer_id);
+        console.log("gggggggggggggggggggggg");
+        console.log(req.user);
+        res.send(user);
     }
 
     updatePersonalDetails = async (req, res) => {

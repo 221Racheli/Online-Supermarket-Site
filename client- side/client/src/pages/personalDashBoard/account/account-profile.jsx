@@ -1,4 +1,4 @@
-import {Box,Button,Card,CardActions,CardContent,Divider,Typography} from '@mui/material';
+import {Box,Card,CardContent,Divider,Typography} from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export const AccountProfile = ({user}) => (
