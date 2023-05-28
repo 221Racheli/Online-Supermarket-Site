@@ -3,7 +3,7 @@ import {Box,Button,Card,CardActions,CardContent,CardHeader,Divider,TextField,Uns
 import axios from 'axios';
 
 
-const updateUser=async(e,values,setUser)=>{
+const updateUser=async(e,values,setValues)=>{
 
   const correctDataToSend={
     first_name:values.firstName,
@@ -21,20 +21,20 @@ const updateUser=async(e,values,setUser)=>{
     }
 });
 if (res.status==200)
-  setUser(...values);
+  setValues(values);
 }
 
-export const AccountProfileDetails = ({user,setUser}) => {
+export const AccountProfileDetails = ({values,setValues}) => {
   
-  const [values, setValues] = useState({
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    phone1: user.phone1,
-    phone2: user.phone2,
-    address: user.address,
-    userName: user.userName
-  });
+  // const [values, setValues] = useState({
+  //   firstName: user.firstName,
+  //   lastName: user.lastName,
+  //   email: user.email,
+  //   phone1: user.phone1,
+  //   phone2: user.phone2,
+  //   address: user.address,
+  //   userName: user.userName
+  // });
   const handleChange = useCallback(
     (event) => {
       setValues((prevState) => ({
@@ -153,7 +153,7 @@ export const AccountProfileDetails = ({user,setUser}) => {
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button onClick={(e)=>updateUser(e,values,setUser)} variant="contained">
+          <Button onClick={(e)=>updateUser(e,values,setValues)} variant="contained">
             שמירת השינויים
           </Button>
         </CardActions>

@@ -1,16 +1,26 @@
 import {Box,Button,Card,CardActions,CardContent,Divider,Typography} from '@mui/material';
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export const AccountProfile = ({user}) => (
-  <Card>
+  <Card> 
+   
     <CardContent>
+     
       <Box
         sx={{
           alignItems: 'center',
           display: 'flex',
           flexDirection: 'column'
         }}
-      >
+      > 
+      <AccountCircleIcon
+     
+      sx={{
+        height: 80,
+        mb: 2,
+        width: 80
+      }}
+    />
         <Typography
           gutterBottom
           variant="h5"

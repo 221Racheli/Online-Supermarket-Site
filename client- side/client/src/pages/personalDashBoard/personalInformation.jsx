@@ -68,14 +68,14 @@ const Page = () => {
                 md={6}
                 lg={4}
               >
-                {/* <AccountProfile user={values}/> */}
+                <AccountProfile user={values}/>
               </Grid>
               <Grid
                 xs={12}
                 md={6}
                 lg={8}
               >
-                <AccountProfileDetails user={values} setUser={setValues} />
+                <AccountProfileDetails values={values} setValues={setValues} />
               </Grid>
             </Grid>
           </div>
@@ -92,4 +92,3 @@ Page.getLayout = (page) => (
 );
 
 export default Page;
-
