@@ -7,27 +7,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from "axios";
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
 
-// function BasicAlerts({ success }) {
-
-//   return (
-//     <Stack sx={{ width: '100%' }} spacing={2}>
-//       {!success && <Alert severity="error">פנייתך לא התקבלה אנא נסה שנית</Alert>}
-
-//       {success && <Alert severity="success">פנייתך התקבלה בהצלחה ותטופל בהקדם</Alert>}
-//     </Stack>
-//   );
-// }
 
 export default function FormDialog() {
 
   const navigate = useNavigate();
   const [success, setSuccess] = useState(false);
-  const [alert, setAlert] = useState(false);
   const [open, setOpen] = React.useState(true);
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -59,7 +46,6 @@ export default function FormDialog() {
   const handleClose = () => {
     navigate(-1);
     setOpen(false);
-    setAlert(true);
   };
 
   const handleChange = event => {
@@ -75,7 +61,6 @@ export default function FormDialog() {
 
   return (
     <>
-      {alert && <Alert severity="error">This is an error alert — check it out!</Alert>}
       <Dialog open={open} >
         <DialogTitle>צור קשר</DialogTitle>
         <DialogContent>

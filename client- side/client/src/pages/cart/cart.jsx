@@ -77,7 +77,7 @@ export default function AlertDialog({ children }) {
                     </List>
                 </DialogContent>
                 <DialogContentText id="cart-dialog-description">
-                    {totalSum}
+                    {totalSum.toFixed(1)}
                 </DialogContentText>
                 <DialogActions>
                     <Button onClick={openCartInfo} autoFocus>
