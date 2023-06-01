@@ -28,11 +28,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
+    align: 'right',
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       width: '10ch',
       '&:focus': {
-        width: '20ch',
+        width:'15ch',
       },
     },
   },
@@ -57,13 +58,13 @@ export default function SearchAppBar() {
   return (
     <>
       <Search >
+        <IconButton onClick={onClickHadle}>
+          <SearchIcon />
+        </IconButton>
         <StyledInputBase onChange={(e) => { setKeyWord(e.target.value) }}
           placeholder="...חיפוש"
           inputProps={{ 'aria-label': 'search' }}
         />
-          <IconButton onClick={onClickHadle}>
-            <SearchIcon />
-          </IconButton>
       </Search>
     </>
   );

@@ -23,7 +23,7 @@ export default function AlertDialogLogOut({ setting }) {
             setLogedIn(false);
             localStorage.removeItem('token')
         }
-        navigate(-2);
+        navigate("/");
         setOpen(false);
     };
 

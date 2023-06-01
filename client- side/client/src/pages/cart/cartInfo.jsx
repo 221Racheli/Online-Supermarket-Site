@@ -199,8 +199,8 @@ export default function SpanningTable() {
                     <TableBody>
                         {rows.map((row) => (
                             <TableRow key={row.desc}>
-                                <TableCell align="right">{ccyFormat(row.price)}</TableCell>
-                                <TableCell align="right">{row.unit}</TableCell>
+                                <TableCell align="right">{row.price.toFixed(1)}</TableCell>
+                                <TableCell align="right">{row.unit.toFixed(1)}</TableCell>
                                 <TableCell align="right">{row.desc}</TableCell>
                                 <TableCell width="10"><IconButton aria-label="expand row" size="small" name="decrease" id={row.id} onClick={(e) => { amountSetting(e.currentTarget) }} sx={{ color: 'black' }}><RemoveSharpIcon /></IconButton></TableCell>
                                 <TableCell width="10"><IconButton aria-label="expand row" size="small" name="increase" id={row.id} onClick={(e) => { amountSetting(e.currentTarget) }} sx={{ color: 'black' }}><AddSharpIcon /></IconButton></TableCell>

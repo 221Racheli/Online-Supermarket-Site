@@ -69,7 +69,7 @@ export default function AlertDialog({ children }) {
                         {products.map((prod) => (
                             <>
                                 <ListItem key={prod.product_id}>
-                                    <ListItemText primary={`מוצר :${prod.name} כמות :${prod.quantity}`} secondary={prod.price *(1-prod.sale/100)} />
+                                    <ListItemText primary={`מוצר :${prod.name} כמות :${prod.quantity}`} secondary={(prod.price *(1-prod.sale/100)).toFixed(1)} />
                                 </ListItem>
                                 <Divider variant="inset" component="li" />
                             </>

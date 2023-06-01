@@ -28,7 +28,6 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/SignIn' element={<SignIn />} />
             <Route path='/SignUp' element={<SignUp />} />
-            {/*  */}
             <Route path='/items/:subCategoryId' element={<NestedGrid />} />
             <Route path='/cart' element={<SpanningTable />} />
             <Route path='/review' element={<FormDialog/>} />
