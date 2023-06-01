@@ -69,7 +69,7 @@ export default function AlertDialog({ children }) {
                         {products.map((prod) => (
                             <>
                                 <ListItem key={prod.product_id}>
-                                    <ListItemText primary={`מוצר :${prod.name} כמות :${prod.quantity}`} secondary={prod.price *(1-prod.sale/100)} />
+                                    <ListItemText primary={`מוצר :${prod.name} כמות :${prod.quantity}`} secondary={(prod.price *(1-prod.sale/100)).toFixed(1)} />
                                 </ListItem>
                                 <Divider variant="inset" component="li" />
                             </>
@@ -77,7 +77,7 @@ export default function AlertDialog({ children }) {
                     </List>
                 </DialogContent>
                 <DialogContentText id="cart-dialog-description">
-                    {totalSum}
+                    {totalSum.toFixed(1)}
                 </DialogContentText>
                 <DialogActions>
                     <Button onClick={openCartInfo} autoFocus>

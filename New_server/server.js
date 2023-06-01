@@ -12,7 +12,7 @@ const ordersRouter=require('./routes/orders-router')
 const productsRouter=require('./routes/products-router')
 const categoryRouter=require('./routes/category-router')
 const reviewsRouter=require('./routes/reviews-router')
-//const authenticationRouter=require('./routes/authRoutes')
+// const authenticationRouter=require('./routes/authRoutes')
 
 console.log(process.env.NODE_ENV)
 app.use(cors(corsOptions))
