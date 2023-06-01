@@ -45,8 +45,6 @@ export default function SearchAppBar() {
   const navigate = useNavigate();
 
   const onClickHadle = () => {
-    console.log("onClickHadle");
-    console.log(keyWord);
     navigate({
       pathname: "/search",
       search: createSearchParams({
@@ -62,7 +60,7 @@ export default function SearchAppBar() {
           <SearchIcon />
         </IconButton>
         <StyledInputBase onChange={(e) => { setKeyWord(e.target.value) }}
-          placeholder="...חיפוש"
+          placeholder="... חיפוש"
           inputProps={{ 'aria-label': 'search' }}
         />
       </Search>

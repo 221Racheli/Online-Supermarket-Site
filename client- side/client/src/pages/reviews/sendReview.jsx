@@ -61,14 +61,14 @@ export default function FormDialog() {
 
   return (
     <>
-      <Dialog open={open} >
+      <Dialog open={open}>
         <DialogTitle>צור קשר</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="Name:"
+            label="שם:"
             type="text"
             fullWidth
             variant="standard"
@@ -78,7 +78,7 @@ export default function FormDialog() {
             autoFocus
             margin="dense"
             id="email"
-            label="Email Address:"
+            label="כתובת מייל :"
             type="email"
             fullWidth
             variant="standard"
@@ -88,7 +88,7 @@ export default function FormDialog() {
             autoFocus
             margin="dense"
             id="content"
-            label="Content:"
+            label="תוכן הפנייה :"
             type="text"
             fullWidth
             variant="standard"
