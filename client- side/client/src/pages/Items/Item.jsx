@@ -14,7 +14,7 @@ import { CartContext } from '../cart/cart';
 import { useContext } from "react"
 
 
-export default function Item({ info }) {
+export default function Item({ info,setAlert }) {
 
   const [open, setOpen] = React.useState(false);
   const [amountItem, setAmountItem] = React.useState(0);
@@ -48,6 +48,7 @@ export default function Item({ info }) {
     localStorage.setItem("cart", JSON.stringify(products));
     localStorage.setItem("amount", amount + amountItem);
     setAmount(amount + amountItem);
+    setAlert(true);
   }
 
   return (
