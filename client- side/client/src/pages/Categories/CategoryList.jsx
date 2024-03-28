@@ -24,7 +24,6 @@ import { AuthContext } from '../../context/AuthContext';
 import { useContext } from "react";
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import SvgIcon from '@mui/material/SvgIcon';
-import { ReactComponent as HomeIcon } from '../../assets/Elegant Online Shopping Logo Template (1).svg';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 
 

@@ -52,8 +52,8 @@ export default function SignIn() {
             //setErr(err.response.data?.message);
         }
   };
-  const handleLogin = async (e) => {
-    // e.preventDefault();
+  const handleLogin = async () => {
+    navigate("/");
   };
   return (
     <ThemeProvider theme={theme}>
@@ -103,7 +103,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              //onClick={() => handleLogin()}
+              onClick={() => handleLogin()}
             >
               Sign In
             </Button>
