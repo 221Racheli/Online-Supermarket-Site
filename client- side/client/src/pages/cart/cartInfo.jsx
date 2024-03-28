@@ -89,11 +89,11 @@ function handleChange(e) {
 
 export default function SpanningTable() {
     const [open, setOpen] = useState(false);
+
     const { amount, setAmount, products, setProducts, totalSum, setTotalSum, total } = useContext(CartContext);
     const navigate = useNavigate();
 
     const rows = products.map(prod => createRow(prod.name, prod.quantity, prod.price*(1-prod.sale/100), prod.product_id));
-
     async function handleOrder() {
         console.log("handleOrder"); 
         products.forEach(async (product) => {
@@ -124,7 +124,9 @@ export default function SpanningTable() {
         setOpen(true);
         navigate("/");
 
-    }
+
+
+    }  
     function handleClick() {
         if (itemsToDelete.length > 0) {
             let tempProducts = [];

@@ -10,7 +10,8 @@ class CategoryDataAccessor {
     getAllCategories = async () => {
         console.log("getAllCategories ❤");
         const categories = await Category.findAll({
-            include: { model: subCategory, as: 'subcategory' }
+            include: { model: subCategory, as: 'subcategory' },
+            where: { isActive: true }
         });
         console.log(JSON.stringify(categories, null, 2));
         return categories;

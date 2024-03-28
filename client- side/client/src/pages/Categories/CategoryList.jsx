@@ -23,6 +23,10 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
 import { useContext } from "react";
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import SvgIcon from '@mui/material/SvgIcon';
+import { ReactComponent as HomeIcon } from '../../assets/Elegant Online Shopping Logo Template (1).svg';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+
 
 
 const BootstrapTooltip = styled(({ className, ...props }) => (
@@ -58,6 +62,9 @@ function ResponsiveAppBar() {
 
   const handleNavigate = (id) => {
     switch (id) {
+      case 'דף הבית':
+        navigate('/');
+        break;
       case 'החשבון שלי':
         navigate('/account');
         break;
@@ -114,6 +121,30 @@ function ResponsiveAppBar() {
                 <LoginIcon />
               </BootstrapTooltip>
             </Box>}
+            <IconButton id="דף הבית" onClick={(e) => handleNavigate(e.currentTarget.id)} sx={{ p: 0 }}>
+                  {/* <SvgIcon>
+                  {/* <svg
+        xmlns='../../assets/Elegant Online Shopping Logo Template (1).svg'
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          // d="/Elegant Online Shopping Logo Template (1).svg"
+        />
+      </svg> */}
+      {/* <HomeIcon/>
+                  </SvgIcon> */} 
+                        {/* <img
+        srcSet={""}
+        // alt={item.title}
+        loading="lazy"
+      /> */}
+      <HomeOutlinedIcon/>
+            </IconButton>
           <SearchAppBar></SearchAppBar>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} >
             <IconButton
