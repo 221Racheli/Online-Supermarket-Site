@@ -22,6 +22,7 @@ import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 function TransitionAlerts() {
     const [open, setOpen] = React.useState(true);
@@ -92,10 +93,12 @@ export default function SpanningTable() {
 
     const { amount, setAmount, products, setProducts, totalSum, setTotalSum, total } = useContext(CartContext);
     const navigate = useNavigate();
+	const { logedIn } = useContext(AuthContext);
 
     const rows = products.map(prod => createRow(prod.name, prod.quantity, prod.price*(1-prod.sale/100), prod.product_id));
     async function handleOrder() {
-        console.log("handleOrder"); 
+        console.log("handleOrder");
+        if(logedIn==true){
         products.forEach(async (product) => {
             const res = await axios.put('http://localhost:3600/products', { productToDelete: product },
                 {
@@ -114,15 +117,28 @@ export default function SpanningTable() {
                 }
             })
         console.log(response);
+        console.log("/852852/85/85/85/8/85885/85/8588888585");
+        console.log(response.data);
         if (response.statusText == 'Created') {
             localStorage.removeItem('cart');
             localStorage.removeItem('amount');
             setProducts([]);
             setAmount(0);
             setTotalSum(0);
-        }
-        setOpen(true);
-        navigate("/");
+           
+        } 
+        navigate("/OrderConfirmation", {
+                state: {
+                    status: response.statusText, 
+                    orderCode:  response.data.data.newOrder.order_id},
+                    // message: `הזמנתך מס!' ${response.data.data.newOrder.order_id} נקלטה בהצלחה`},
+              });
+        // setOpen(true);
+        // // navigate("/"); 
+    }
+        else{
+			navigate('/signInUp');
+		}
 
 
 

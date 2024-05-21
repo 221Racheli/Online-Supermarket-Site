@@ -43,11 +43,6 @@ export default function AlertDialogLogedIn() {
         <DialogTitle id="alert-dialog-title">
           {"אינך מחובר למערכת"}
         </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description" >
-            כדי לפתוח פניה לשירות לקוחות יש להתחבר
-          </DialogContentText>
-        </DialogContent>
         <DialogActions >
           <Button name="הרשמה" onClick={(e)=>{handleClose(e.currentTarget.name)}}>הרשמה</Button>
           <Button name="כניסה" onClick={(e)=>{handleClose(e.currentTarget.name)}} autoFocus>

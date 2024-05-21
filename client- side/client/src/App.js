@@ -16,6 +16,7 @@ import AlertDialogLogOut from './pages/general/logout'
 import { AuthContextProvider } from './context/AuthContext';
 import SearchPage from "./pages/Search/searchPage";
 import NotFound from "./pages/general/notFound";
+import OrderConfirmation from "./pages/cart/OrderConfirmation";
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
             <Route path='/graph' element={<BarGraph/>}/>
             <Route path='/logOut'element={<AlertDialogLogOut setting={true}/>} />
             <Route path="/search"element={<SearchPage></SearchPage>} />
+            <Route path="/OrderConfirmation" element={<OrderConfirmation></OrderConfirmation>}/>
             <Route path='*' element={<NotFound></NotFound>} />
           </Routes>
         </AlertDialog>
