@@ -15,6 +15,7 @@ import BarGraph from './pages/personalDashBoard/graphs'
 import AlertDialogLogOut from './pages/general/logout'
 import { AuthContextProvider } from './context/AuthContext';
 import SearchPage from "./pages/Search/searchPage";
+import NotFound from "./pages/general/notFound";
 
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
             <Route path='/graph' element={<BarGraph/>}/>
             <Route path='/logOut'element={<AlertDialogLogOut setting={true}/>} />
             <Route path="/search"element={<SearchPage></SearchPage>} />
-            <Route path='*' element={<h1> 404 Page not found</h1>} />
+            <Route path='*' element={<NotFound></NotFound>} />
           </Routes>
         </AlertDialog>
         <BottomAppBar></BottomAppBar>

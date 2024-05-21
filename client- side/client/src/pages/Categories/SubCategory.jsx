@@ -15,6 +15,9 @@ export default function BasicMenu({ category, categoryId }) {
  useEffect (() => {
     async function fetchData() {
       const { data } = await axios.get(`http://localhost:3600/category/${categoryId}`);
+      console.log("*******************************************************");
+console.log(data);
+      console.log("*******************************************************");
       setSubCategories(data);
     }
     fetchData();
@@ -53,7 +56,7 @@ export default function BasicMenu({ category, categoryId }) {
         }}
         sx={{ color: 'white' }}
       >
-        {subCategories.map(x => <MenuItem id={x.subcategory_id} onClick={(e) => { handleClose(e) }} >{x.name} {x.subcategory_id}</MenuItem>)}
+        {subCategories.map(x => <MenuItem id={x.subcategory_id} onClick={(e) => { handleClose(e) }} >{x.name}</MenuItem>)}
       </Menu>
     </div>
   );

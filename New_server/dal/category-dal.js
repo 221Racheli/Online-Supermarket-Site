@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const db = require('../models/index');
 const Category = db.category;
 const subCategory = db.subcategory;
@@ -20,7 +21,10 @@ class CategoryDataAccessor {
     //checked 👍
     getAllSubCategories = async (categoryId) => {
         console.log(categoryId);
-        var subCategories = await subCategory.findAll({ where: { category_id: categoryId } });
+        var subCategories = await subCategory.findAll({ where: 
+            {[Op.and]:[
+                { category_id: categoryId},{isActive: true}
+            ] } });
         return subCategories;
     }
 

@@ -17,6 +17,10 @@ import { NavLink } from 'react-router-dom'
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from '../../context/AuthContext';
 import { useContext } from "react";
+import BasicAlerts from '../general/alerts/Alert';
+import { useState } from 'react';
+
+
 
 
 function Copyright(props) {
@@ -35,29 +39,45 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-   const navigate = useNavigate();
-   const { setLogedIn } = useContext(AuthContext);
-    const handleSubmit = async(event) => {
-      event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const user_name= data.get('user_name');
-        const password= data.get('password');
-        try {
-            const res = await axios.post('http://localhost:3600/users/login', { user_name, password });
-            localStorage.setItem("token", JSON.stringify(res.data.accessToken));
-            setLogedIn(true);
-            navigate(-2);
-        }
-        catch (err) {
-            //setErr(err.response.data?.message);
-        }
+  const navigate = useNavigate();
+  const { setLogedIn } = useContext(AuthContext);
+  // const [showAlert, setShowAlert] = useState(false); // State to manage alert visibility
+  // const [alertMessage, setAlertMessage] = useState('');
+  // const [alertSeverity, setAlertSeverity] = useState('');
+
+  const [severity, setSeverity] = useState("*");
+  const [text, setText] = useState("");
+  const [alert, setAlert] = useState(false);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+    const user_name = data.get('user_name');
+    const password = data.get('password');
+    try {
+      const res = await axios.post('http://localhost:3600/users/login', { user_name, password });
+      localStorage.setItem("token", JSON.stringify(res.data.accessToken));
+      setLogedIn(true);
+      console.log("===========================================");
+      setText("נכנסת בהצלחה");
+      setSeverity("success");
+      setAlert(true);
+      console.log("*//*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/");
+      console.log(alert, text, severity);
+      navigate("/");
+    }
+    catch (err) {
+      //setErr(err.response.data?.message);
+    }
   };
-  const handleLogin = async () => {
-    navigate("/");
-  };
+  // const handleLogin = async () => {
+  //   navigate("/");
+  // };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
+        {/* { alert && <BasicAlerts severity={severity} text={text} setAlert={setAlert}/>} */}
         <CssBaseline />
         <Box
           sx={{
@@ -103,7 +123,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={() => handleLogin()}
+            // onClick={() => handleLogin()}
             >
               Sign In
             </Button>

@@ -36,6 +36,7 @@ export default function BarGraph({ orderData }) {
                 newData.forEach(d=>{
                     arrangeData[unique.indexOf(d.name)].sum+=d.sum
                 })
+                setMessage('');
                 setMapData([...arrangeData]);
             }
             catch {
@@ -49,8 +50,15 @@ export default function BarGraph({ orderData }) {
 
     return (
         <Container>
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                minHeight="100vh"
+                textAlign="center"
+            >
             <Typography>גרף סכום הזמנות לטווח שבין {startDate} ל {endDate}</Typography>
-            <Button variant="outlined" endIcon={<SignalCellularAltIcon />} onClick={showGraph}>הצג גרף</Button>
             <Box display='flex' alignItems='right'>
                 <TextField
                     id="input-with-icon-textfield"
@@ -78,9 +86,10 @@ export default function BarGraph({ orderData }) {
                     }}
                     variant="standard"
                     sx={{ margin: 10 }}
-                    onBlur={(e) => setStartDate(e.currentTarget.value)}
+                    onBlur={(e) => setStartDate(e.currentTarget.value.toFixed(2))}
                 />
             </Box>
+            <Button variant="outlined" endIcon={<SignalCellularAltIcon />} onClick={showGraph}>הצג גרף</Button>
             {message != '' && <Typography textAlign={'right'}>{message}</Typography>}
             <BarChart
                 width={500}
@@ -101,6 +110,7 @@ export default function BarGraph({ orderData }) {
                 <CartesianGrid strokeDasharray="3 3" />
                 <Bar dataKey="sum" fill="#8884d8" background={{ fill: "#eee" }} />
             </BarChart>
+            </Box>
         </Container>
     );
 }
