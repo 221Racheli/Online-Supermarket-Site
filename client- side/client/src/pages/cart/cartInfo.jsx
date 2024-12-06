@@ -95,7 +95,7 @@ export default function SpanningTable() {
     const navigate = useNavigate();
 	const { logedIn } = useContext(AuthContext);
 
-    const rows = products.map(prod => createRow(prod.name, prod.quantity, prod.price*(1-prod.sale/100), prod.product_id));
+    const rows = products.map(prod => createRow(prod.name, prod.quantity, prod.price, prod.product_id));
     async function handleOrder() {
         console.log("handleOrder");
         if(logedIn==true){

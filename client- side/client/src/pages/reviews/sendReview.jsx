@@ -9,6 +9,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
+import { Box } from '@mui/material';
+
 
 
 export default function FormDialog() {
@@ -61,9 +63,10 @@ export default function FormDialog() {
 
   return (
     <>
-      <Dialog open={open}>
+      <Dialog open={open} dir='rtl'>
         <DialogTitle>צור קשר</DialogTitle>
-        <DialogContent>
+        <DialogContent dir='rtl'>
+        <Box sx={{ textAlign: 'right' }}>
           <TextField
             autoFocus
             margin="dense"
@@ -73,6 +76,7 @@ export default function FormDialog() {
             fullWidth
             variant="standard"
             onChange={handleChange}
+            InputLabelProps={{ style: { right: 0, left: 'auto', textAlign: 'right' } }}
           />
           <TextField
             autoFocus
@@ -83,6 +87,7 @@ export default function FormDialog() {
             fullWidth
             variant="standard"
             onChange={handleChange}
+            InputLabelProps={{ style: { right: 0, left: 'auto', textAlign: 'right' } }}
           />
           <TextField multiline
             autoFocus
@@ -93,11 +98,13 @@ export default function FormDialog() {
             fullWidth
             variant="standard"
             onChange={handleChange}
+            InputLabelProps={{ style: { right: 0, left: 'auto', textAlign: 'right' } }}
           />
+          </Box>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Submit</Button>
+        <DialogActions sx={{ justifyContent: 'flex-end' }}>
+          <Button onClick={handleClose}>ביטול</Button>
+          <Button onClick={handleSubmit}>שליחה</Button>
         </DialogActions>
       </Dialog>
     </>

@@ -80,10 +80,6 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  // const logOut = () => {
-  //   setLogedIn(false);
-  //   localStorage.setItem('token', null);
-  // }
 
   useEffect(() => {
     async function fetchData() {
@@ -94,9 +90,15 @@ function ResponsiveAppBar() {
   }, []);
 
   return (
-    <AppBar position="sticky"  >
+    <AppBar position="sticky">
       <Container maxWidth="xl" >
         <Toolbar disableGutters>
+        <img
+            src={'logo.png'}
+            alt="Logo"
+            style={{ height: '60px', cursor: 'pointer', marginRight: '10px' }}
+            onClick={() => navigate('/')}
+          />
           {logedIn == true ?
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="החשבון שלי">
@@ -121,27 +123,6 @@ function ResponsiveAppBar() {
               </BootstrapTooltip>
             </Box>}
             <IconButton id="דף הבית" onClick={(e) => handleNavigate(e.currentTarget.id)} sx={{ p: 0 }}>
-                  {/* <SvgIcon>
-                  {/* <svg
-        xmlns='../../assets/Elegant Online Shopping Logo Template (1).svg'
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          // d="/Elegant Online Shopping Logo Template (1).svg"
-        />
-      </svg> */}
-      {/* <HomeIcon/>
-                  </SvgIcon> */} 
-                        {/* <img
-        srcSet={""}
-        // alt={item.title}
-        loading="lazy"
-      /> */}
       <HomeOutlinedIcon/>
             </IconButton>
           <SearchAppBar></SearchAppBar>
@@ -176,52 +157,16 @@ function ResponsiveAppBar() {
             >
               {categories.map((category) => (
                 <MenuItem key={category.category_id}>
-                  <Typography textAlign="center">{category.name}</Typography>
-                  <BasicMenu category={category.name} categoryId={category.category_id} > {category.name}</BasicMenu>
+                  <BasicMenu category={category.name} categoryId={category.category_id} ></BasicMenu>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          {/* <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO_
-          </Typography> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {categories.map((category) => (
-              <BasicMenu category={category.name} categoryId={category.category_id}>{category.name}</BasicMenu>
+              <BasicMenu category={category.name} categoryId={category.category_id}></BasicMenu>
             ))}
           </Box>
-          {/* <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO Supermarket
-          </Typography> */}
           <CustomizedBadges></CustomizedBadges>
         </Toolbar>
       </Container>

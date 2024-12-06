@@ -1,5 +1,5 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
+
+import React, { useState, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -13,26 +13,37 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { useState, useEffect } from "react";
-import axios from 'axios'
+import axios from 'axios';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { CartContext } from '../cart/cart';
-import { useContext } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+import { prefixer } from 'stylis';
+
+// Create RTL cache
+const cacheRtl = createCache({
+  key: 'muirtl',
+  stylisPlugins: [prefixer],
+});
+
+// Create RTL theme
+const theme = createTheme({
+  direction: 'rtl',
+});
 
 let itemsToAddToCart = [];
 
 function handleChange(e, info) {
-  if (e.target.checked == true)
+  if (e.target.checked === true)
     itemsToAddToCart.push(info);
   else
-    itemsToAddToCart = itemsToAddToCart.filter(item => item.product_id != e.target.info.product_id);
+    itemsToAddToCart = itemsToAddToCart.filter(item => item.product_id !== info.product_id);
 }
 
-
 function IconLabelButtons() {
-
   const { amount, setAmount, products, setProducts, totalSum, setTotalSum } = useContext(CartContext);
 
   function addItemToCart(item) {
@@ -40,31 +51,26 @@ function IconLabelButtons() {
       alert("item not available");
       return;
     }
-    // res=axios.get('http://')
     setTotalSum(totalSum + item.price);
-    const ind = products.findIndex(prod => prod.product_id == item.product_id);
+    const ind = products.findIndex(prod => prod.product_id === item.product_id);
     if (ind < 0) {
+      item.price = parseFloat(item.price);
       products.push({ ...item, "quantity": 1 });
       setProducts([...products]);
-    }
-
-    else {
+    } else {
       products[ind].quantity += 1;
     }
     localStorage.setItem("cart", JSON.stringify(products));
     localStorage.setItem("amount", amount + 1);
     setAmount(amount + 1);
-
   }
 
   return (
-    <Button variant="contained" endIcon={<AddShoppingCartIcon />} onClick={() => itemsToAddToCart.forEach((item) => { console.log(itemsToAddToCart); addItemToCart(item) })}>
+    <Button variant="contained" endIcon={<AddShoppingCartIcon />} onClick={() => itemsToAddToCart.forEach(addItemToCart)}>
       להוספה לסל
     </Button>
   );
 }
-
-
 
 function createInfoData(product_id, name, price, quantity, company, category, isActive, picture) {
   return {
@@ -78,51 +84,44 @@ function createInfoData(product_id, name, price, quantity, company, category, is
     picture
   };
 }
-function createData(id, sum, address, status, date) {
+
+function createData(id, sum, status, date) {
   return {
     id,
     sum,
-    address,
     status,
     date,
   };
-
-
 }
 
 function Row(props) {
   const { row } = props;
-  console.log(row.id)
-  const orderId = row.id;
   const [open, setOpen] = React.useState(false);
+  const [infoFromFetch, setInfoFromFetch] = useState([]);
 
-  const [infoFromFetch, setInfoFromFetch] = useState("");
   useEffect(() => {
     async function fetchInfo() {
-      const { data } = await axios.get(`http://localhost:3600/orders/products/${orderId}`,
-        {
+      if (open) {
+        const { data } = await axios.get(`http://localhost:3600/orders/products/${row.id}`, {
           headers: {
             'authorization': `Bearer ${localStorage.getItem('token')}`,
             'content-type': 'application/json'
           }
-        })
-      console.log(data)
-      setInfoFromFetch(data);
+        });
+        setInfoFromFetch(data);
+      }
     }
-    fetchInfo()
-  }, []);
-  const rows = [];
-  if (infoFromFetch.length > 0) {
-    infoFromFetch.forEach(item => {
-      rows.push(createInfoData(item.product_id, item.name, item.price, item.quantity, item.company, item.subcategory_id, item.isActive, item.picture))
-    });
-  }
+    fetchInfo();
+  }, [open, row.id]);
+
+  const rows = infoFromFetch.map(item =>
+    createInfoData(item.product_id, item.name, item.price, item.quantity, item.company, item.subcategory_id, item.isActive, item.picture)
+  );
+
   return (
-   
-    <React.Fragment> 
-      
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }} dir="rtl">
-        <TableCell align="right">
+    <React.Fragment>
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+        <TableCell>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -131,14 +130,10 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell align="right" component="th" scope="row">
-          {row.id}
-        </TableCell>
-        <TableCell align="right">{row.sum}</TableCell>
-        <TableCell align="right">{row.address}</TableCell>
-        {/* <TableCell align="right">{row.amount}</TableCell> */}
-        <TableCell align="right">{row.status}</TableCell>
+        <TableCell align="right">{row.id}</TableCell>
         <TableCell align="right">{row.date}</TableCell>
+        <TableCell align="right">{row.status}</TableCell>
+        <TableCell align="right">{row.sum}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -150,24 +145,23 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="right"></TableCell>
-                    <TableCell align="right">שם המוצר</TableCell>
-                    <TableCell align="right">מחיר</TableCell>
-                    <TableCell align="right">כמות</TableCell>
-                    <TableCell align="right">חברה</TableCell>
+                    <TableCell></TableCell>
                     <TableCell align="right">קטגוריה</TableCell>
+                    <TableCell align="right">חברה</TableCell>
+                    <TableCell align="right">כמות</TableCell>
+                    <TableCell align="right">מחיר</TableCell>
+                    <TableCell align="right">שם המוצר</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {rows.map((historyRow) => (
                     <TableRow key={historyRow.product_id}>
-                      {/* <Checkbox {...label} /> */}
-                      <TableCell align="right"><Checkbox onChange={(e) => handleChange(e, historyRow)} /></TableCell>
-                      <TableCell align="right">{historyRow.name}</TableCell>
-                      <TableCell align="right" component="th" scope="row"> {Math.round(historyRow.price)}</TableCell>
-                      <TableCell align="right">{historyRow.quantity}</TableCell>
-                      <TableCell align="right">{historyRow.company}</TableCell>
+                      <TableCell><Checkbox onChange={(e) => handleChange(e, historyRow)} /></TableCell>
                       <TableCell align="right">{historyRow.category}</TableCell>
+                      <TableCell align="right">{historyRow.company}</TableCell>
+                      <TableCell align="right">{historyRow.quantity}</TableCell>
+                      <TableCell align="right">{Math.round(historyRow.price)}</TableCell>
+                      <TableCell align="right">{historyRow.name}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -177,34 +171,11 @@ function Row(props) {
           </Collapse>
         </TableCell>
       </TableRow>
-    
     </React.Fragment>
-    
   );
 }
 
-// Row.propTypes = {
-//   row: PropTypes.shape({
-//     id: PropTypes.number.isRequired,
-//     sum: PropTypes.number.isRequired,
-//     address: PropTypes.string.isRequired,
-//     // info: PropTypes.arrayOf(
-//     //   PropTypes.shape({
-//     //     amount: PropTypes.number.isRequired,
-//     //     name: PropTypes.string.isRequired,
-//     //     price: PropTypes.string.isRequired,
-//     //     category: PropTypes.string.isRequired,
-//     //     company: PropTypes.string.isRequired,
-//     //   }),
-//     // ).isRequired,
-//     status: PropTypes.string.isRequired,
-//     // amount: PropTypes.number.isRequired,
-//     date: PropTypes.string.isRequired,
-//   }).isRequired,
-// };
-
 export default function CollapsibleTable() {
-
   const [dataFromFetch, setDataFromFetch] = useState([]);
 
   useEffect(() => {
@@ -214,38 +185,38 @@ export default function CollapsibleTable() {
           'authorization': `Bearer ${localStorage.getItem('token')}`,
           'content-type': 'application/json'
         }
-      })
+      });
       setDataFromFetch(data);
     }
     fetchData();
   }, []);
 
-  const rows = [];
-  if (dataFromFetch.length > 0) {
-    dataFromFetch.forEach(item => {
-      rows.push(createData(item.order_id, item.totalPrice, JSON.stringify(item.orderAddress), item.status, item.createdAt.slice(0,10)))
-    });
-  }
+  const rows = dataFromFetch.map(item => 
+    createData(item.order_id, item.totalPrice, item.status, item.createdAt.slice(0,10))
+  );
+
   return (
-    <TableContainer component={Paper} dir="rtl">
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-          <TableCell/>
-            <TableCell align="right">מזהה הזמנה</TableCell>
-            <TableCell align="right">סכום</TableCell>
-            <TableCell align="right">כתובת</TableCell>
-            <TableCell align="right">סטטוס</TableCell>
-            <TableCell align="right">תאריך</TableCell>
-            {/* <TableCell align="right">פריטים</TableCell> */}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <Row key={row.id} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <CacheProvider value={cacheRtl}>
+      <ThemeProvider theme={theme}>
+        <TableContainer component={Paper} dir="rtl">
+          <Table aria-label="collapsible table" sx={{ minWidth: '100%' }}>
+            <TableHead>
+              <TableRow>
+                <TableCell />
+                <TableCell align="right">מזהה הזמנה</TableCell>
+                <TableCell align="right">תאריך</TableCell>
+                <TableCell align="right">סטטוס</TableCell>
+                <TableCell align="right">סכום</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <Row key={row.id} row={row} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </ThemeProvider>
+    </CacheProvider>
   );
 }

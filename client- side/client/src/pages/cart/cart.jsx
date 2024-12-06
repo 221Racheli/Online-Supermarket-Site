@@ -22,7 +22,7 @@ export const CartContext = createContext();
 function total(products) {
     let sum=0;
     products.forEach(product => {
-        sum+=product.price*product.quantity
+        sum+=parseFloat(product.price)*product.quantity
      });
      return sum;
 }
@@ -69,7 +69,7 @@ export default function AlertDialog({ children }) {
                         {products.map((prod) => (
                             <>
                                 <ListItem key={prod.product_id}>
-                                    <ListItemText primary={`מוצר :${prod.name} כמות :${prod.quantity}`} secondary={(prod.price *(1-prod.sale/100)).toFixed(1)} />
+                                    <ListItemText primary={`מוצר :${prod.name} כמות :${prod.quantity}`} secondary={(parseFloat(prod.price)).toFixed(1)} />
                                 </ListItem>
                                 <Divider variant="inset" component="li" />
                             </>
